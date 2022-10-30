@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.cors.CorsConfiguration;
-import pvs.app.filter.JwtTokenFilter;
+import pvs.app.auth.JwtTokenFilter;
 
 @Configuration
 @EnableWebSecurity
