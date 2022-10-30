@@ -31,6 +31,7 @@ public class ProjectService {
         Project project = new Project();
         project.setMemberId(1L);
         project.setName(projectDTO.getProjectName());
+
         savedProject = projectDAO.save(project);
 
         if(!projectDTO.getGithubRepositoryURL().equals("")){
