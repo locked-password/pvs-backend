@@ -56,7 +56,7 @@ public class SonarApiController {
     }
 
     @GetMapping("/sonar/{component}/bug")
-    public ResponseEntity<String> getBug(@PathVariable("component") String component) throws IOException {
+    public ResponseEntity<String> getBug(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<BugDTO> bugList = sonarApiService.getSonarBug(component);
@@ -78,7 +78,7 @@ public class SonarApiController {
     }
 
     @GetMapping("/sonar/{component}/code_smell")
-    public ResponseEntity<String> getCodeSmell(@PathVariable("component") String component) throws IOException {
+    public ResponseEntity<String> getCodeSmell(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<CodeSmellDTO> codeSmellList = sonarApiService.getSonarCodeSmell(component);
@@ -100,7 +100,7 @@ public class SonarApiController {
     }
 
     @GetMapping("/sonar/{component}/duplication")
-    public ResponseEntity<String> getDuplication(@PathVariable("component") String component) throws IOException {
+    public ResponseEntity<String> getDuplication(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<DuplicationDTO> duplicationList = sonarApiService.getDuplication(component);

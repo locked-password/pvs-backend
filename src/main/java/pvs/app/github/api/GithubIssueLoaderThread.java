@@ -1,11 +1,10 @@
-package pvs.app.github.api.thread;
+package pvs.app.github.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.reactive.function.client.WebClient;
-import pvs.app.github.api.GithubIssueDTO;
 
 import java.io.IOException;
 import java.util.List;

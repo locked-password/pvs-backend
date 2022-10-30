@@ -13,8 +13,12 @@ public class AuthController {
 
     static final Logger logger = LogManager.getLogger(AuthController.class.getName());
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
     /**
      * 登录
      */

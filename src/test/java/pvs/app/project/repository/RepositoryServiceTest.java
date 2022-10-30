@@ -1,4 +1,4 @@
-package pvs.app.github.api;
+package pvs.app.project.repository;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -11,9 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
-import pvs.app.project.RepositoryService;
-
-import java.io.IOException;
+import pvs.app.project.repository.RepositoryService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
@@ -23,7 +21,7 @@ public class RepositoryServiceTest {
     private RepositoryService repositoryService;
 
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() {
         MockWebServer mockWebServer = new MockWebServer();
         this.repositoryService = new RepositoryService(WebClient.builder(), mockWebServer.url("/").toString());
 

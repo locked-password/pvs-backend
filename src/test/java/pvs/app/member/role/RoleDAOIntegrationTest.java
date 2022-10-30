@@ -1,4 +1,4 @@
-package pvs.app.member;
+package pvs.app.member.role;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
+import pvs.app.member.role.Role;
+import pvs.app.member.role.RoleDAO;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)

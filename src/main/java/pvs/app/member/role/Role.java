@@ -1,4 +1,4 @@
-package pvs.app.member;
+package pvs.app.member.role;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

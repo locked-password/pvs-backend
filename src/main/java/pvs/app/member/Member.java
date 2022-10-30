@@ -2,6 +2,7 @@ package pvs.app.member;
 
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
+import pvs.app.member.role.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

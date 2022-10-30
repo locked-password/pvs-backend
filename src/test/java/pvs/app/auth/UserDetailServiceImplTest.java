@@ -17,7 +17,7 @@ import org.springframework.util.DigestUtils;
 import pvs.app.Application;
 import pvs.app.member.Member;
 import pvs.app.member.MemberDAO;
-import pvs.app.member.Role;
+import pvs.app.member.role.Role;
 
 import java.util.Set;
 

@@ -5,6 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import pvs.app.github.api.GithubApiService;
+import pvs.app.project.repository.Repository;
+import pvs.app.project.repository.RepositoryDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -12,6 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
 import pvs.app.github.api.GithubApiService;
+import pvs.app.project.repository.Repository;
+import pvs.app.project.repository.RepositoryDTO;
 
 import java.io.IOException;
 import java.util.*;

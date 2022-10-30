@@ -1,7 +1,6 @@
 package pvs.app.github.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.joda.time.format.ISODateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

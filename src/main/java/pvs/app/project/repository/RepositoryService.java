@@ -1,4 +1,4 @@
-package pvs.app.project;
+package pvs.app.project.repository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

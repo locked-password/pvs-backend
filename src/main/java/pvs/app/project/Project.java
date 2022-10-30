@@ -1,5 +1,7 @@
 package pvs.app.project;
 
+import pvs.app.project.repository.Repository;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;

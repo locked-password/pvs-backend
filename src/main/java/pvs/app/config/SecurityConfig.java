@@ -27,9 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     static final Logger logger = LogManager.getLogger(SecurityConfig.class.getName());
 
-    @Qualifier("userDetailsServiceImpl")
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {

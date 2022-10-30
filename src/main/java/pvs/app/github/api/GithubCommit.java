@@ -1,7 +1,7 @@
 package pvs.app.github.api;
 
 import lombok.Data;
-import pvs.app.project.Repository;
+import pvs.app.project.repository.Repository;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

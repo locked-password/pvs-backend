@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
+import pvs.app.member.role.Role;
+import pvs.app.member.role.RoleService;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;

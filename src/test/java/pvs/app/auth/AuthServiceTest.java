@@ -15,9 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
 import pvs.app.member.Member;
-import pvs.app.member.Role;
+import pvs.app.member.role.Role;
 
-import java.io.IOException;
 import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
@@ -39,7 +38,7 @@ public class AuthServiceTest {
     private Member member;
 
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() {
         this.authService = new AuthService(authenticationManager,
                 userDetailsService, jwtTokenUtil);
 
