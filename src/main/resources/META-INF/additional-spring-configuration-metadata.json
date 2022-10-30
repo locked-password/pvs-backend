@@ -4,5 +4,6 @@
       "name": "webClient.baseUrl.sonar",
       "type": "java.lang.String",
       "description": "Description for webClient.baseUrl.sonar."
-  }
-] }
+    }
+  ]
+}
