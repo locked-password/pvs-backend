@@ -8,9 +8,9 @@
 
 ## Run App Step
 1. set java home:  https://javatutorial.net/set-java-home-windows-10
-   * Scoop is recommended.
+    * Scoop is recommended.
 2. install mysql: https://dev.mysql.com/downloads/mysql
-   * Docker is recommended.
+    * Docker is recommended.
 3. open cmd window
 4. cd ./target
 5. java -jar springboot-1.0-SNAPSHOT.jar
