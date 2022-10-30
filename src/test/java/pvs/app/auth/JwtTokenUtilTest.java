@@ -1,23 +1,24 @@
 package pvs.app.auth;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
 import pvs.app.member.Member;
 import pvs.app.member.Role;
-import pvs.app.auth.JwtTokenUtil;
 
 import java.io.IOException;
 import java.util.Set;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class JwtTokenUtilTest {
 
@@ -27,7 +28,7 @@ public class JwtTokenUtilTest {
     private Member memberUser;
     private Member memberAdmin;
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException {
         memberUser = new Member();
         Role userRole = new Role();

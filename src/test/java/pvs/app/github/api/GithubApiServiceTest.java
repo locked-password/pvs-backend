@@ -4,17 +4,16 @@ package pvs.app.github.api;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
-import pvs.app.github.api.GithubApiService;
-import pvs.app.github.api.GithubCommitService;
-import pvs.app.github.api.GithubIssueDTO;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class GithubApiServiceTest {
 
@@ -34,7 +33,7 @@ public class GithubApiServiceTest {
 
     private GithubApiService githubApiService;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.mockWebServer = new MockWebServer();
         this.githubApiService = new GithubApiService(WebClient.builder(), mockWebServer.url("/").toString(), githubCommitService);

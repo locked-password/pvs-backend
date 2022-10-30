@@ -1,17 +1,16 @@
 package pvs.app.project;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
-import pvs.app.project.Project;
-import pvs.app.project.Repository;
-import pvs.app.project.ProjectDAO;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ProjectDAOIntegrationTest {
@@ -33,7 +32,7 @@ public class ProjectDAOIntegrationTest {
     Set<Project> projects;
     Set<Repository> repositories;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
 

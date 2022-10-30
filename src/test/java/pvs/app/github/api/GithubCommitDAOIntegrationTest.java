@@ -1,22 +1,22 @@
 package pvs.app.github.api;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
-import pvs.app.github.api.GithubCommit;
-import pvs.app.github.api.GithubCommitDAO;
 
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GithubCommitDAOIntegrationTest {
@@ -27,7 +27,7 @@ public class GithubCommitDAOIntegrationTest {
     private final GithubCommit githubCommit01 = new GithubCommit();
     private final GithubCommit githubCommit02 = new GithubCommit();
 
-    @Before
+    @BeforeEach
     public void setup() {
         githubCommit01.setRepoOwner("facebook");
         githubCommit01.setRepoName("react");

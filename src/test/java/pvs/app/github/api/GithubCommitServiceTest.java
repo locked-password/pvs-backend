@@ -1,17 +1,15 @@
 package pvs.app.github.api;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
-import pvs.app.github.api.GithubCommit;
-import pvs.app.github.api.GithubCommitDTO;
-import pvs.app.github.api.GithubCommitDAO;
-import pvs.app.github.api.GithubCommitService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class GithubCommitServiceTest {
 
@@ -38,7 +36,7 @@ public class GithubCommitServiceTest {
     private final GithubCommit githubCommit02 = new GithubCommit();
     private final GithubCommitDTO githubCommitDTO01 = new GithubCommitDTO();
 
-    @Before
+    @BeforeEach
     public void setup() throws ParseException {
         githubCommits = new LinkedList<>();
 

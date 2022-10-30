@@ -1,19 +1,20 @@
 package pvs.app.member;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
-import pvs.app.member.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class MemberServiceTest {
     @Autowired
@@ -29,7 +30,7 @@ public class MemberServiceTest {
     private final MemberDTO member01DTO = new MemberDTO();
     private final Role userRole = new Role();
 
-    @Before
+    @BeforeEach
     public void setup() {
         member01.setMemberId(1L);
         member01.setUsername("user");

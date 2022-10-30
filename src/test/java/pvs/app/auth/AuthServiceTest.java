@@ -1,8 +1,9 @@
 package pvs.app.auth;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +12,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
-import pvs.app.auth.AuthService;
 import pvs.app.member.Member;
 import pvs.app.member.Role;
-import pvs.app.auth.JwtTokenUtil;
 
 import java.io.IOException;
 import java.util.Set;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class AuthServiceTest {
 
@@ -40,7 +40,7 @@ public class AuthServiceTest {
 
     private Member member;
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException {
         this.authService = new AuthService(authenticationManager,
                 userDetailsService, jwtTokenUtil);

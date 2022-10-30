@@ -1,8 +1,9 @@
 package pvs.app.auth;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
-import pvs.app.auth.UserDetailsServiceImpl;
 import pvs.app.member.MemberDAO;
 import pvs.app.member.Member;
 import pvs.app.member.Role;
 
 import java.util.Set;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class UserDetailServiceImplTest {
 
@@ -35,7 +36,7 @@ public class UserDetailServiceImplTest {
 
     private Member member;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.userDetailsServiceImpl = new UserDetailsServiceImpl(mockMemberDAO);
 

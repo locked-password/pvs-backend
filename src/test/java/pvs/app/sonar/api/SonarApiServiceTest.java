@@ -3,21 +3,22 @@ package pvs.app.sonar.api;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
-import pvs.app.sonar.api.*;
 
 import java.io.IOException;
 import java.util.List;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class SonarApiServiceTest {
     @Autowired
@@ -25,7 +26,7 @@ public class SonarApiServiceTest {
 
     private MockWebServer mockWebServer;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.mockWebServer = new MockWebServer();
         this.sonarApiService = new SonarApiService(WebClient.builder(), mockWebServer.url("/").toString());

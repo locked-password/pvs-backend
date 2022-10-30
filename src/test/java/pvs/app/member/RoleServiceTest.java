@@ -1,23 +1,21 @@
 package pvs.app.member;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
-import pvs.app.member.RoleDAO;
-import pvs.app.member.RoleDTO;
-import pvs.app.member.Role;
-import pvs.app.member.RoleService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class RoleServiceTest {
 
@@ -30,7 +28,7 @@ public class RoleServiceTest {
     Role role;
     RoleDTO roleDTO;
 
-    @Before
+    @BeforeEach
     public void setup() {
         role = new Role();
         role.setRoleId(1L);

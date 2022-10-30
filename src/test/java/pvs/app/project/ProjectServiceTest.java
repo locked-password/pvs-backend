@@ -2,21 +2,17 @@ package pvs.app.project;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
 import pvs.app.github.api.GithubApiService;
-import pvs.app.project.ProjectDAO;
-import pvs.app.project.CreateProjectDTO;
-import pvs.app.project.ResponseProjectDTO;
-import pvs.app.project.Project;
-import pvs.app.project.Repository;
-import pvs.app.project.ProjectService;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 public class ProjectServiceTest {
     @Autowired
@@ -46,7 +42,7 @@ public class ProjectServiceTest {
     final String responseJson = "{\"avatarUrl\":\"https://avatars3.githubusercontent.com/u/17744001?u=038d9e068c4205d94c670d7d89fb921ec5b29782&v=4\"}";
     Optional<JsonNode> mockAvatar;
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException {
         projectDTO = new CreateProjectDTO();
         projectDTO.setProjectName("react");
