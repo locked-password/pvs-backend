@@ -1,14 +1,13 @@
 package pvs.app.github.api;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
 
 import java.text.ParseException;
@@ -17,8 +16,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -70,7 +67,7 @@ public class GithubCommitServiceTest {
         List<GithubCommitDTO> githubCommits = githubCommitService.getAllCommits("facebook", "react");
 
         //then
-        assertEquals(2, githubCommits.size());
+        Assertions.assertEquals(2, githubCommits.size());
         verify(mockGithubCommitDAO, times(1)).findByRepoOwnerAndRepoName("facebook", "react");
     }
 
@@ -87,12 +84,12 @@ public class GithubCommitServiceTest {
         GithubCommitDTO githubCommit = githubCommitService.getLastCommit("facebook", "react");
 
         //then
-        assertEquals(dateFormat.parse("2020-12-21 22:22:22"), githubCommit.getCommittedDate());
+        Assertions.assertEquals(dateFormat.parse("2020-12-21 22:22:22"), githubCommit.getCommittedDate());
         verify(mockGithubCommitDAO, times(1)).findFirstByRepoOwnerAndRepoNameOrderByCommittedDateDesc("facebook", "react");
     }
 
     @Test
-    public void getLastCommit_isNotExist() throws ParseException {
+    public void getLastCommit_isNotExist() {
         //context
         when(mockGithubCommitDAO.findFirstByRepoOwnerAndRepoNameOrderByCommittedDateDesc("facebook", "react"))
                 .thenReturn(null);
@@ -101,12 +98,12 @@ public class GithubCommitServiceTest {
         GithubCommitDTO githubCommit = githubCommitService.getLastCommit("facebook", "react");
 
         //then
-        assertNull(githubCommit);
+        Assertions.assertNull(githubCommit);
     }
 
     @Test
     public void save() {
-        List<GithubCommit> fakeGithubCommits= new ArrayList<>();
+        List<GithubCommit> fakeGithubCommits = new ArrayList<>();
         fakeGithubCommits.add(githubCommit01);
 
         //context
@@ -120,7 +117,7 @@ public class GithubCommitServiceTest {
 
         //then
         List<GithubCommitDTO> githubCommitDTOList = githubCommitService.getAllCommits("facebook", "react");
-        assertEquals(1, githubCommitDTOList.size());
-//        verify(mockGithubCommitDAO, times(1)).save(githubCommit01);
+        Assertions.assertEquals(1, githubCommitDTOList.size());
+        verify(mockGithubCommitDAO, times(1)).save(githubCommit01);
     }
 }

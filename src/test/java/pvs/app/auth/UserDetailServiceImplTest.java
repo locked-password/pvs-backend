@@ -1,10 +1,9 @@
 package pvs.app.auth;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,11 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
-import pvs.app.member.MemberDAO;
 import pvs.app.member.Member;
+import pvs.app.member.MemberDAO;
 import pvs.app.member.Role;
 
 import java.util.Set;
@@ -47,7 +45,7 @@ public class UserDetailServiceImplTest {
 
         member.setMemberId(1L);
         member.setUsername("test");
-        member.setPassword(DigestUtils.md5DigestAsHex(String.valueOf("test").getBytes()));
+        member.setPassword(DigestUtils.md5DigestAsHex("test".getBytes()));
         member.setAuthorities(Set.of(userRole));
     }
 
@@ -58,7 +56,7 @@ public class UserDetailServiceImplTest {
         //when
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername("test");
         //then
-        Assert.assertEquals(member, userDetails);
+        Assertions.assertEquals(member, userDetails);
     }
 
     @Test
@@ -68,6 +66,6 @@ public class UserDetailServiceImplTest {
         //when
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername("notFound");
         //then
-        Assert.assertNull(userDetails);
+        Assertions.assertNull(userDetails);
     }
 }

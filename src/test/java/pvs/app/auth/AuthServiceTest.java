@@ -1,10 +1,9 @@
 package pvs.app.auth;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
 import pvs.app.member.Member;
@@ -52,7 +50,7 @@ public class AuthServiceTest {
 
         member.setMemberId(1L);
         member.setUsername("test");
-        member.setPassword(DigestUtils.md5DigestAsHex(String.valueOf("test").getBytes()));
+        member.setPassword(DigestUtils.md5DigestAsHex("test".getBytes()));
         member.setAuthorities(Set.of(userRole));
     }
 
@@ -63,8 +61,8 @@ public class AuthServiceTest {
         Mockito.when(userDetailsService.loadUserByUsername("test")).thenReturn(userDetails);
         Mockito.when(jwtTokenUtil.generateToken(userDetails)).thenReturn("this is jwtToken");
         //when
-        String jwtTocken = authService.login("test", "test");
+        String jwtToken = authService.login("test", "test");
         //then
-        Assert.assertEquals("this is jwtToken", jwtTocken);
+        Assertions.assertEquals("this is jwtToken", jwtToken);
     }
 }

@@ -1,5 +1,6 @@
 package pvs.app.member;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
 
 import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
@@ -33,14 +32,15 @@ public class MemberDAOIntegrationTest {
     public void whenFindByAccount_thenReturnMember() {
         Member foundEntity = memberDAO.findByUsername("aaaa");
 
-        assertEquals(member01.getUsername(), "aaaa");
+        Assertions.assertEquals(member01.getUsername(), foundEntity.getUsername());
     }
 
     @Test
     public void whenFindById_thenReturnMember() {
         Optional<Member> foundEntity = memberDAO.findById(member01.getMemberId());
 
-        assertEquals(member01.getUsername(), foundEntity.orElse(null).getUsername());
+        assert foundEntity.orElse(null) != null;
+        Assertions.assertEquals(member01.getUsername(), foundEntity.orElse(null).getUsername());
     }
 
 }

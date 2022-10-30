@@ -1,22 +1,19 @@
 package pvs.app.project;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
@@ -24,31 +21,26 @@ import static org.junit.Assert.assertEquals;
 public class ProjectDAOIntegrationTest {
     @Autowired
     private ProjectDAO projectDAO;
-
-    private Project project01;
-    private Project project02;
-    private Repository repository01;
-    private Repository repository02;
     Set<Project> projects;
     Set<Repository> repositories;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
-        project01 = new Project();
+        Project project01 = new Project();
         project01.setMemberId(1L);
         project01.setName("react");
 
-        project02 = new Project();
+        Project project02 = new Project();
         project02.setMemberId(2L);
         project02.setName("angular");
 
-        repository01 = new Repository();
+        Repository repository01 = new Repository();
         repository01.setType("github");
         repository01.setUrl("facebook/react");
 
-        repository02 = new Repository();
+        Repository repository02 = new Repository();
         repository02.setType("github");
         repository02.setUrl("angular/angular");
 
@@ -64,7 +56,7 @@ public class ProjectDAOIntegrationTest {
     @Test
     public void whenFindAll_thenReturnProjectList() {
         List<Project> foundEntityList = projectDAO.findAll();
-        assertEquals(2, foundEntityList.size());
-        assertEquals(2, foundEntityList.get(0).getRepositorySet().size());
+        Assertions.assertEquals(2, foundEntityList.size());
+        Assertions.assertEquals(2, foundEntityList.get(0).getRepositorySet().size());
     }
 }

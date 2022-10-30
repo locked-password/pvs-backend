@@ -1,20 +1,17 @@
 package pvs.app.github.api;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
 
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
@@ -49,7 +46,7 @@ public class GithubCommitDAOIntegrationTest {
         List<GithubCommit> foundEntityList = githubCommitDAO
                 .findByRepoOwnerAndRepoName("facebook", "react");
 
-        assertEquals(githubCommit01.getRepoOwner(), foundEntityList.get(0).getRepoOwner());
+        Assertions.assertEquals(githubCommit01.getRepoOwner(), foundEntityList.get(0).getRepoOwner());
     }
 
     @Test
@@ -57,6 +54,6 @@ public class GithubCommitDAOIntegrationTest {
         GithubCommit foundEntity =
                 githubCommitDAO.findFirstByRepoOwnerAndRepoNameOrderByCommittedDateDesc("angular", "angular");
 
-        assertEquals(githubCommit02.getCommittedDate(), foundEntity.getCommittedDate());
+        Assertions.assertEquals(githubCommit02.getCommittedDate(), foundEntity.getCommittedDate());
     }
 }

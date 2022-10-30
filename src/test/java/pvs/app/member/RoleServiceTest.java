@@ -1,18 +1,16 @@
 package pvs.app.member;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
@@ -43,13 +41,13 @@ public class RoleServiceTest {
     public void save() {
         Mockito.when(roleDAO.save(any(Role.class))).thenReturn(role);
 
-        assertEquals("USER", roleService.save(roleDTO).getName());
+        Assertions.assertEquals("USER", roleService.save(roleDTO).getName());
     }
 
     @Test
     public void getByName() {
         Mockito.when(roleDAO.findByName("USER")).thenReturn(role);
 
-        assertEquals(role, roleService.getByName("USER"));
+        Assertions.assertEquals(role, roleService.getByName("USER"));
     }
 }

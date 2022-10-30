@@ -1,18 +1,19 @@
 package pvs.app.member;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import pvs.app.Application;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
@@ -53,7 +54,7 @@ public class MemberServiceTest {
         MemberDTO memberDTO = memberService.get(1L);
 
         //then
-        assertEquals(member01DTO.toString(), memberDTO.toString());
+        Assertions.assertEquals(member01DTO.toString(), memberDTO.toString());
         verify(mockMemberDAO, times(1)).findById(1L);
     }
 
@@ -67,7 +68,7 @@ public class MemberServiceTest {
         //when
         MemberDTO memberDTO = memberService.createUser(member01DTO);
         //then
-        assertEquals(member01DTO.toString(), memberDTO.toString());
+        Assertions.assertEquals(member01DTO.toString(), memberDTO.toString());
     }
 
 }

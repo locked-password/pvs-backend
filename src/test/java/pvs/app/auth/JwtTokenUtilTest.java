@@ -1,15 +1,13 @@
 package pvs.app.auth;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
 import pvs.app.member.Member;
@@ -37,7 +35,7 @@ public class JwtTokenUtilTest {
 
         memberUser.setMemberId(1L);
         memberUser.setUsername("user");
-        memberUser.setPassword(DigestUtils.md5DigestAsHex(String.valueOf("user").getBytes()));
+        memberUser.setPassword(DigestUtils.md5DigestAsHex("user".getBytes()));
         memberUser.setAuthorities(Set.of(userRole));
 
         memberAdmin = new Member();
@@ -47,7 +45,7 @@ public class JwtTokenUtilTest {
 
         memberAdmin.setMemberId(2L);
         memberAdmin.setUsername("admin");
-        memberAdmin.setPassword(DigestUtils.md5DigestAsHex(String.valueOf("admin").getBytes()));
+        memberAdmin.setPassword(DigestUtils.md5DigestAsHex("admin".getBytes()));
         memberAdmin.setAuthorities(Set.of(adminRole));
     }
 
@@ -59,11 +57,11 @@ public class JwtTokenUtilTest {
         String token = jwtTokenUtil.generateToken(userDetails);
         boolean tokenValidated = jwtTokenUtil.validateToken(token, userDetails);
         //then
-        Assert.assertTrue(tokenValidated);
+        Assertions.assertTrue(tokenValidated);
     }
 
     @Test
-    public void invalidToken(){
+    public void invalidToken() {
         //given
         UserDetails authenticatedUser = memberUser;
         UserDetails authenticatedAdmin = memberAdmin;
@@ -73,9 +71,8 @@ public class JwtTokenUtilTest {
         boolean tokenValidated = jwtTokenUtil.validateToken(token, authenticatedAdmin);
 
         //then
-        Assert.assertFalse(tokenValidated);
+        Assertions.assertFalse(tokenValidated);
     }
-
 
 
 }

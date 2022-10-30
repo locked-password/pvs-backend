@@ -3,15 +3,13 @@ package pvs.app.github.api;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
 
@@ -70,10 +68,10 @@ public class GithubApiServiceTest {
         //when
         try {
             result = githubApiService.getCommitsFromGithub("facebook", "react", lastDate);
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException ignored) {
 
         }
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -136,14 +134,14 @@ public class GithubApiServiceTest {
         //when
         try {
             result = githubApiService.getCommitsFromGithub("facebook", "react", lastDate);
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException ignored) {
 
         }
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
-    public void getIssuesFromGithub_notRunThread()  {
+    public void getIssuesFromGithub_notRunThread() {
         //given
         List<GithubIssueDTO> result = new ArrayList<>();
         mockWebServer.enqueue(new MockResponse()
@@ -166,7 +164,7 @@ public class GithubApiServiceTest {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(0, result.size());
+        Assertions.assertEquals(0, result.size());
     }
 
     @Test
@@ -195,11 +193,11 @@ public class GithubApiServiceTest {
         //when
         try {
             avatarURL = githubApiService.getAvatarURL("facebook").textValue();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
 
-        Assert.assertEquals("https://avatars3.githubusercontent.com/u/69631?v=4", avatarURL);
+        Assertions.assertEquals("https://avatars3.githubusercontent.com/u/69631?v=4", avatarURL);
     }
 
 }

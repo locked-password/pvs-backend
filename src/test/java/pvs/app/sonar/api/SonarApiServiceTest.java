@@ -2,15 +2,13 @@ package pvs.app.sonar.api;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
 
@@ -40,7 +38,7 @@ public class SonarApiServiceTest {
                 .addHeader("Content-Type", "application/json")
         );
         List<CodeCoverageDTO> data = sonarApiService.getSonarCodeCoverage("pvs-springboot");
-        Assert.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
+        Assertions.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
     }
 
     @Test
@@ -51,7 +49,7 @@ public class SonarApiServiceTest {
                 .addHeader("Content-Type", "application/json")
         );
         List<BugDTO> data = sonarApiService.getSonarBug("pvs-springboot");
-        Assert.assertEquals(Integer.valueOf(22), data.get(0).getValue());
+        Assertions.assertEquals(Integer.valueOf(22), data.get(0).getValue());
     }
 
     @Test
@@ -62,7 +60,7 @@ public class SonarApiServiceTest {
                 .addHeader("Content-Type", "application/json")
         );
         List<CodeSmellDTO> data = sonarApiService.getSonarCodeSmell("pvs-springboot");
-        Assert.assertEquals(Integer.valueOf(22), data.get(0).getValue());
+        Assertions.assertEquals(Integer.valueOf(22), data.get(0).getValue());
     }
 
     @Test
@@ -73,6 +71,6 @@ public class SonarApiServiceTest {
                 .addHeader("Content-Type", "application/json")
         );
         List<DuplicationDTO> data = sonarApiService.getDuplication("pvs-springboot");
-        Assert.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
+        Assertions.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
     }
 }
