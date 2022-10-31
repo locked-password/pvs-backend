@@ -1,9 +1,7 @@
 package pvs.app.member.role;
 
 import org.springframework.stereotype.Service;
-import pvs.app.member.role.Role;
-import pvs.app.member.role.RoleDAO;
-import pvs.app.member.role.RoleDTO;
+import pvs.app.member.role.post.RoleDTO;
 
 @Service
 public class RoleService {

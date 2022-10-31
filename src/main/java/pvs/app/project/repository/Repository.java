@@ -1,6 +1,6 @@
 package pvs.app.project.repository;
 
-import pvs.app.github.api.GithubCommit;
+import pvs.app.github.api.commit.GithubCommit;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

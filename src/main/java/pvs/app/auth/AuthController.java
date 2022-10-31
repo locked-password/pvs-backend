@@ -2,11 +2,10 @@ package pvs.app.auth;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pvs.app.member.MemberDTO;
+import pvs.app.member.post.MemberDTO;
 
 @RestController
 public class AuthController {

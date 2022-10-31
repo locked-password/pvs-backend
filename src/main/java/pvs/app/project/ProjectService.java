@@ -5,6 +5,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import pvs.app.github.api.GithubApiService;
+import pvs.app.project.get.ResponseProjectDTO;
+import pvs.app.project.post.CreateProjectDTO;
+import pvs.app.project.repository.post.AddGithubRepositoryDTO;
+import pvs.app.project.repository.post.AddSonarRepositoryDTO;
 import pvs.app.project.repository.Repository;
 import pvs.app.project.repository.RepositoryDTO;
 

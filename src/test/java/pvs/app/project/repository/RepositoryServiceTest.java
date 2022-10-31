@@ -4,6 +4,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,49 +12,55 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
-import pvs.app.project.repository.RepositoryService;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
+@ExtendWith(SpringExtension.class)
+@Tag("Unit")
 public class RepositoryServiceTest {
 
     @Autowired
-    private RepositoryService repositoryService;
+    private RepositoryService sut;
 
     @BeforeEach
     public void setup() {
-        MockWebServer mockWebServer = new MockWebServer();
-        this.repositoryService = new RepositoryService(WebClient.builder(), mockWebServer.url("/").toString());
-
-        mockWebServer.enqueue(new MockResponse()
+        MockWebServer mockGithubAPIServer = new MockWebServer();
+        mockGithubAPIServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setBody("{}")
                 .addHeader("Content-Type", "application/json")
         );
+
+        MockWebServer mockSonarAPIServer = new MockWebServer();
+        mockSonarAPIServer.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{}")
+                .addHeader("Content-Type", "application/json")
+        );
+
+        this.sut = new RepositoryService(WebClient.builder(), mockSonarAPIServer.url("/").toString());
     }
 
     @Test
-    public void checkSonarURL_thenReturnFalse() {
-        boolean exist = repositoryService.checkSonarURL("pvs-springboot");
-        Assertions.assertFalse(exist);
-    }
-
-    @Test
-    public void checkSonarURL_thenReturnTrue() {
-        boolean exist = repositoryService.checkSonarURL("http://140.124.181.143:9002/dashboard");
+    public void checkSonarURL_GivenValidURL_ThenReturnTrue() {
+        boolean exist = sut.checkSonarURL("http://140.124.181.143:9002/dashboard");
         Assertions.assertTrue(exist);
     }
 
     @Test
-    public void checkGithubURL_thenReturnFalse() {
-        boolean exist = repositoryService.checkGithubURL("pvs-springboot");
+    public void checkSonarURL_GivenInvalidURL_ThenReturnFalse() {
+        boolean exist = sut.checkSonarURL("pvs-springboot");
         Assertions.assertFalse(exist);
     }
 
     @Test
-    public void checkGithubURL_thenReturnTrue() {
-        boolean exist = repositoryService.checkGithubURL("https://github.com/imper0502/rime-full-bopomofo");
+    public void checkGithubURL_GivenValidURL_ThenReturnTrue() {
+        boolean exist = sut.checkGithubURL("https://github.com/imper0502/rime-full-bopomofo");
         Assertions.assertTrue(exist);
     }
 
+    @Test
+    public void checkGithubURL_GivenInvalidURL_ThenReturnFalse() {
+        boolean exist = sut.checkGithubURL("pvs-springboot");
+        Assertions.assertFalse(exist);
+    }
 }

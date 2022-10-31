@@ -1,4 +1,4 @@
-package pvs.app.sonar.api;
+package pvs.app.sonar.api.get;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class CodeSmellDTO {
+public class CodeCoverageDTO {
     Date date;
-    Integer value;
+    Double value;
 
 }

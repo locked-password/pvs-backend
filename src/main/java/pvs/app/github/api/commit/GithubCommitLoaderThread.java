@@ -1,4 +1,4 @@
-package pvs.app.github.api;
+package pvs.app.github.api.commit;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import pvs.app.github.api.commit.post.GithubCommitDTO;
 
 import java.io.IOException;
 import java.util.HashMap;

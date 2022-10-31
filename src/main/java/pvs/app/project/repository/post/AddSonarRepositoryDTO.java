@@ -1,9 +1,9 @@
-package pvs.app.project;
+package pvs.app.project.repository.post;
 
 import lombok.Data;
 
 @Data
-public class AddGithubRepositoryDTO {
+public class AddSonarRepositoryDTO {
     private Long projectId;
     private String repositoryURL;
 }

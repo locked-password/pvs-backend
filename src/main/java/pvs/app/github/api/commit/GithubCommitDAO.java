@@ -1,4 +1,4 @@
-package pvs.app.github.api;
+package pvs.app.github.api.commit;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

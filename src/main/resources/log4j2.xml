@@ -18,13 +18,13 @@
         <Logger name="pvs.app.project.repository.RepositoryService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubCommitService" level="debug" additivity="false">
+        <Logger name="pvs.app.github.api.commit.GithubCommitService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubCommitDTO" level="debug" additivity="false">
+        <Logger name="pvs.app.github.api.commit.post.GithubCommitDTO" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubIssueLoaderThread" level="debug" additivity="false">
+        <Logger name="pvs.app.github.api.issue.GithubIssueLoaderThread" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="pvs.app.sonar.api.SonarApiService" level="debug" additivity="false">

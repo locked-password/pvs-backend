@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import pvs.app.github.api.commit.GithubCommitLoaderThread;
+import pvs.app.github.api.commit.GithubCommitService;
+import pvs.app.github.api.issue.get.GithubIssueDTO;
+import pvs.app.github.api.issue.GithubIssueLoaderThread;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

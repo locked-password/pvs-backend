@@ -1,4 +1,4 @@
-package pvs.app.github.api;
+package pvs.app.github.api.commit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
+import pvs.app.github.api.commit.GithubCommit;
+import pvs.app.github.api.commit.GithubCommitDAO;
 
 import java.util.Date;
 import java.util.List;

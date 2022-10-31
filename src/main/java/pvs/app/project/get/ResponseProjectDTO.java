@@ -1,4 +1,4 @@
-package pvs.app.project;
+package pvs.app.project.get;
 
 import lombok.Data;
 import pvs.app.project.repository.RepositoryDTO;

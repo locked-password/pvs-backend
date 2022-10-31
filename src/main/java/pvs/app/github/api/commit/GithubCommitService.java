@@ -1,9 +1,10 @@
-package pvs.app.github.api;
+package pvs.app.github.api.commit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import pvs.app.github.api.commit.post.GithubCommitDTO;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pvs.app.github.api;
+package pvs.app.github.api.commit;
 
 import lombok.Data;
 import pvs.app.project.repository.Repository;

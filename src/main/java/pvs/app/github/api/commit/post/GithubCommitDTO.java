@@ -1,4 +1,4 @@
-package pvs.app.github.api;
+package pvs.app.github.api.commit.post;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;

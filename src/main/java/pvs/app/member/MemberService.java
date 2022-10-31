@@ -2,6 +2,7 @@ package pvs.app.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import pvs.app.member.post.MemberDTO;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -20,13 +21,14 @@ public class MemberService {
     }
 
     public MemberDTO createUser(MemberDTO memberDTO) {
-        Set<Role> roleSet = new HashSet<>();
         Member member = new Member();
-        String encodePassword = DigestUtils.md5DigestAsHex(memberDTO.getPassword().getBytes());
 
         member.setUsername(memberDTO.getUsername());
+
+        String encodePassword = DigestUtils.md5DigestAsHex(memberDTO.getPassword().getBytes());
         member.setPassword(encodePassword);
 
+        Set<Role> roleSet = new HashSet<>();
         Role userRole = roleService.getByName("USER");
         if(userRole != null) {
             roleSet.add(userRole);
@@ -34,6 +36,7 @@ public class MemberService {
         }
 
         Member savedMember = memberDAO.save(member);
+
         memberDTO.setId(savedMember.getMemberId());
         return memberDTO;
     }

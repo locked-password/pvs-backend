@@ -12,6 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
+import pvs.app.github.api.commit.GithubCommitService;
+import pvs.app.github.api.issue.get.GithubIssueDTO;
 
 import java.io.IOException;
 import java.text.ParseException;

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pvs.app.sonar.api.get.BugDTO;
+import pvs.app.sonar.api.get.CodeCoverageDTO;
+import pvs.app.sonar.api.get.CodeSmellDTO;
+import pvs.app.sonar.api.get.DuplicationDTO;
 
 import java.io.IOException;
 import java.util.List;

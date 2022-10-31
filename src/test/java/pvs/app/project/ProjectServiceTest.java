@@ -6,13 +6,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
+import pvs.app.project.get.ResponseProjectDTO;
+import pvs.app.project.post.CreateProjectDTO;
 import pvs.app.project.repository.Repository;
 import pvs.app.project.repository.RepositoryDTO;
+import pvs.app.project.repository.post.AddGithubRepositoryDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,15 +34,14 @@ import static org.mockito.Mockito.*;
 @Tag("Unit")
 public class ProjectServiceTest {
     @Autowired
+    @InjectMocks
     private ProjectService sut;
 
     @SpyBean
     @Autowired
     private ProjectDAO spyOnProjectDAO;
-    CreateProjectDTO stubbingCreateProjectDTO;
-    Project stubbingProject;
-    Set<Repository> stubbingRepositories;
-    Repository stubbingRepository;
+    private CreateProjectDTO stubbingCreateProjectDTO;
+    private Project stubbingProject;
 
     @BeforeEach
     public void setup() throws IOException {
@@ -51,24 +55,32 @@ public class ProjectServiceTest {
         stubbingProject.setName(stubbingCreateProjectDTO.getProjectName());
         stubbingProject.setMemberId(1L);
         stubbingProject.setAvatarURL("https://avatars3.githubusercontent.com/u/17744001?u=038d9e068c4205d94c670d7d89fb921ec5b29782&v=4");
-        stubbingRepositories = new HashSet<>();
-        stubbingRepository = new Repository();
-        stubbingRepository.setRepositoryId(1L);
-        stubbingRepository.setType("github");
-        stubbingRepository.setUrl(stubbingCreateProjectDTO.getGithubRepositoryURL());
-        stubbingRepositories.add(stubbingRepository);
-        stubbingRepository = new Repository();
-        stubbingRepository.setRepositoryId(2L);
-        stubbingRepository.setType("sonar");
-        stubbingRepository.setUrl(stubbingCreateProjectDTO.getSonarRepositoryURL());
-        stubbingRepositories.add(stubbingRepository);
+        Set<Repository> stubbingRepositories = new HashSet<>();
+        Repository stubbingRepository1 = new Repository();
+        stubbingRepository1.setRepositoryId(1L);
+        stubbingRepository1.setType("github");
+        stubbingRepository1.setUrl(stubbingCreateProjectDTO.getGithubRepositoryURL());
+        stubbingRepositories.add(stubbingRepository1);
+        Repository stubbingRepository2 = new Repository();
+        stubbingRepository2.setRepositoryId(2L);
+        stubbingRepository2.setType("sonar");
+        stubbingRepository2.setUrl(stubbingCreateProjectDTO.getSonarRepositoryURL());
+        stubbingRepositories.add(stubbingRepository2);
         stubbingProject.setRepositorySet(stubbingRepositories);
+
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     public void create() throws IOException {
+        // Context:
+        ProjectService spyOnSUT = spy(sut);
+        doReturn(true)
+                .when(spyOnSUT)
+                .addGithubRepo(isA(AddGithubRepositoryDTO.class));
+
         // When:
-        sut.create(stubbingCreateProjectDTO);
+        spyOnSUT.create(stubbingCreateProjectDTO);
 
         // Then:
         verify(spyOnProjectDAO, atLeast(1)).save(isA(Project.class));

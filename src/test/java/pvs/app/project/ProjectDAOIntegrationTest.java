@@ -2,6 +2,7 @@ package pvs.app.project;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
@@ -16,8 +17,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
+@ExtendWith(SpringExtension.class)
+@Tag("Integration")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ProjectDAOIntegrationTest {
     @Autowired
