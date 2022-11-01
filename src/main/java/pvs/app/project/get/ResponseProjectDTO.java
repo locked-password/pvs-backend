@@ -1,7 +1,7 @@
 package pvs.app.project.get;
 
 import lombok.Data;
-import pvs.app.project.repository.RepositoryDTO;
+import pvs.app.project.hyperlink.HyperlinkDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class ResponseProjectDTO {
     Long projectId;
     String projectName;
     String avatarURL;
-    List<RepositoryDTO> repositoryDTOList = new ArrayList<>();
+    List<HyperlinkDTO> HyperlinkDTOList = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -22,11 +22,11 @@ public class ResponseProjectDTO {
         return Objects.equals(projectId, that.projectId) &&
                 Objects.equals(projectName, that.projectName) &&
                 Objects.equals(avatarURL, that.avatarURL) &&
-                Objects.equals(repositoryDTOList, that.repositoryDTOList);
+                Objects.equals(HyperlinkDTOList, that.HyperlinkDTOList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectId, projectName, avatarURL, repositoryDTOList);
+        return Objects.hash(projectId, projectName, avatarURL, HyperlinkDTOList);
     }
 }

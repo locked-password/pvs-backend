@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.project.repository.Repository;
+import pvs.app.project.hyperlink.Hyperlink;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ProjectDAOIntegrationTest {
     @Autowired
     private ProjectDAO projectDAO;
     Set<Project> projects;
-    Set<Repository> repositories;
+    Set<Hyperlink> repositories;
 
     @BeforeEach
     public void setup() {
@@ -39,19 +39,19 @@ public class ProjectDAOIntegrationTest {
         project02.setMemberId(2L);
         project02.setName("angular");
 
-        Repository repository01 = new Repository();
-        repository01.setType("github");
-        repository01.setUrl("facebook/react");
+        Hyperlink hyperlink01 = new Hyperlink();
+        hyperlink01.setType("github");
+        hyperlink01.setUrl("facebook/react");
 
-        Repository repository02 = new Repository();
-        repository02.setType("github");
-        repository02.setUrl("angular/angular");
+        Hyperlink hyperlink02 = new Hyperlink();
+        hyperlink02.setType("github");
+        hyperlink02.setUrl("angular/angular");
 
         projects = new HashSet<>();
         repositories = new HashSet<>();
 
-        project01.getRepositorySet().add(repository01);
-        project01.getRepositorySet().add(repository02);
+        project01.getHyperlinkSet().add(hyperlink01);
+        project01.getHyperlinkSet().add(hyperlink02);
         projectDAO.save(project01);
         projectDAO.save(project02);
     }
@@ -60,6 +60,6 @@ public class ProjectDAOIntegrationTest {
     public void whenFindAll_thenReturnProjectList() {
         List<Project> foundEntityList = projectDAO.findAll();
         Assertions.assertEquals(2, foundEntityList.size());
-        Assertions.assertEquals(2, foundEntityList.get(0).getRepositorySet().size());
+        Assertions.assertEquals(2, foundEntityList.get(0).getHyperlinkSet().size());
     }
 }

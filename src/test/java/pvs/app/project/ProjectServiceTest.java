@@ -15,9 +15,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
 import pvs.app.project.get.ResponseProjectDTO;
 import pvs.app.project.post.CreateProjectDTO;
-import pvs.app.project.repository.Repository;
-import pvs.app.project.repository.RepositoryDTO;
-import pvs.app.project.repository.post.AddGithubRepositoryDTO;
+import pvs.app.project.hyperlink.Hyperlink;
+import pvs.app.project.hyperlink.HyperlinkDTO;
+import pvs.app.project.hyperlink.post.AddGithubRepositoryHyperlinkDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,18 +55,18 @@ public class ProjectServiceTest {
         stubbingProject.setName(stubbingCreateProjectDTO.getProjectName());
         stubbingProject.setMemberId(1L);
         stubbingProject.setAvatarURL("https://avatars3.githubusercontent.com/u/17744001?u=038d9e068c4205d94c670d7d89fb921ec5b29782&v=4");
-        Set<Repository> stubbingRepositories = new HashSet<>();
-        Repository stubbingRepository1 = new Repository();
-        stubbingRepository1.setRepositoryId(1L);
-        stubbingRepository1.setType("github");
-        stubbingRepository1.setUrl(stubbingCreateProjectDTO.getGithubRepositoryURL());
-        stubbingRepositories.add(stubbingRepository1);
-        Repository stubbingRepository2 = new Repository();
-        stubbingRepository2.setRepositoryId(2L);
-        stubbingRepository2.setType("sonar");
-        stubbingRepository2.setUrl(stubbingCreateProjectDTO.getSonarRepositoryURL());
-        stubbingRepositories.add(stubbingRepository2);
-        stubbingProject.setRepositorySet(stubbingRepositories);
+        Set<Hyperlink> stubbingRepositories = new HashSet<>();
+        Hyperlink stubbingHyperlink1 = new Hyperlink();
+        stubbingHyperlink1.setHyperlinkId(1L);
+        stubbingHyperlink1.setType("github");
+        stubbingHyperlink1.setUrl(stubbingCreateProjectDTO.getGithubRepositoryURL());
+        stubbingRepositories.add(stubbingHyperlink1);
+        Hyperlink stubbingHyperlink2 = new Hyperlink();
+        stubbingHyperlink2.setHyperlinkId(2L);
+        stubbingHyperlink2.setType("sonar");
+        stubbingHyperlink2.setUrl(stubbingCreateProjectDTO.getSonarRepositoryURL());
+        stubbingRepositories.add(stubbingHyperlink2);
+        stubbingProject.setHyperlinkSet(stubbingRepositories);
 
         MockitoAnnotations.openMocks(this);
     }
@@ -77,7 +77,7 @@ public class ProjectServiceTest {
         ProjectService spyOnSUT = spy(sut);
         doReturn(true)
                 .when(spyOnSUT)
-                .addGithubRepo(isA(AddGithubRepositoryDTO.class));
+                .addGithubRepo(isA(AddGithubRepositoryHyperlinkDTO.class));
 
         // When:
         spyOnSUT.create(stubbingCreateProjectDTO);
@@ -114,12 +114,12 @@ public class ProjectServiceTest {
         dto.setProjectId(stubbingProject.getProjectId());
         dto.setProjectName(stubbingProject.getName());
         dto.setAvatarURL(stubbingProject.getAvatarURL());
-        dto.setRepositoryDTOList(stubbingProject.getRepositorySet().stream()
+        dto.setHyperlinkDTOList(stubbingProject.getHyperlinkSet().stream()
                 .map(r -> {
-                    RepositoryDTO repositoryDTO = new RepositoryDTO();
-                    repositoryDTO.setType(r.getType());
-                    repositoryDTO.setUrl(r.getUrl());
-                    return repositoryDTO;
+                    HyperlinkDTO HyperlinkDTO = new HyperlinkDTO();
+                    HyperlinkDTO.setType(r.getType());
+                    HyperlinkDTO.setUrl(r.getUrl());
+                    return HyperlinkDTO;
                 })
                 .collect(Collectors.toList()));
         return dto;
