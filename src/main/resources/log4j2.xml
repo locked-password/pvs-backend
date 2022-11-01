@@ -6,31 +6,31 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="pvs.app.github.api.GithubApiController" level="debug" additivity="false">
+        <Logger name="pvs.app.api.github.GithubApiController" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="pvs.app.project.ProjectService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubApiService" level="debug" additivity="false">
+        <Logger name="pvs.app.api.github.GithubApiService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.project.repository.RepositoryService" level="debug" additivity="false">
+        <Logger name="pvs.app.project.hyperlink.HyperlinkService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubCommitService" level="debug" additivity="false">
+        <Logger name="pvs.app.api.github.commit.GithubCommitService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubCommitDTO" level="debug" additivity="false">
+        <Logger name="pvs.app.api.github.commit.post.GithubCommitDTO" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.github.api.GithubIssueLoaderThread" level="debug" additivity="false">
+        <Logger name="pvs.app.api.github.issue.GithubIssueLoaderThread" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.sonar.api.SonarApiService" level="debug" additivity="false">
+        <Logger name="pvs.app.api.sonarqube.SonarApiService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.sonar.api.SonarApiController" level="debug" additivity="false">
+        <Logger name="pvs.app.api.sonarqube.SonarApiController" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="pvs.app.auth.JwtTokenFilter" level="debug" additivity="false">

@@ -1,6 +1,6 @@
 package pvs.app.project;
 
-import pvs.app.project.repository.Repository;
+import pvs.app.project.hyperlink.Hyperlink;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,11 +25,11 @@ public class Project {
 
     @ManyToMany(cascade = { CascadeType.ALL },fetch=FetchType.EAGER)
     @JoinTable(
-            name = "project_repository",
+            name = "project_hyperlink",
             joinColumns = { @JoinColumn(name = "project_id") },
-            inverseJoinColumns = { @JoinColumn(name = "repository_id") }
+            inverseJoinColumns = { @JoinColumn(name = "hyperlink_id") }
     )
-    private Set<Repository> repositorySet = new HashSet<>();
+    private Set<Hyperlink> hyperlinkSet = new HashSet<>();
 
     public Long getProjectId() {
         return projectId;
@@ -63,11 +63,11 @@ public class Project {
         this.avatarURL = avatarURL;
     }
 
-    public Set<Repository> getRepositorySet() {
-        return repositorySet;
+    public Set<Hyperlink> getHyperlinkSet() {
+        return hyperlinkSet;
     }
 
-    public void setRepositorySet(Set<Repository> repositorySet) {
-        this.repositorySet = repositorySet;
+    public void setHyperlinkSet(Set<Hyperlink> hyperlinkSet) {
+        this.hyperlinkSet = hyperlinkSet;
     }
 }

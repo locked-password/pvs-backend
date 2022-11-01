@@ -7,7 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pvs.app.project.repository.RepositoryService;
+import pvs.app.project.get.ResponseProjectDTO;
+import pvs.app.project.post.CreateProjectDTO;
+import pvs.app.project.hyperlink.HyperlinkService;
+import pvs.app.project.hyperlink.post.AddGithubRepositoryHyperlinkDTO;
+import pvs.app.project.hyperlink.post.AddSonarQubeHyperlinkDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,16 +36,16 @@ public class ProjectController {
     private String failMessage;
     
     private final ProjectService projectService;
-    private final RepositoryService repositoryService;
+    private final HyperlinkService HyperlinkService;
 
-    public ProjectController(ProjectService projectService, RepositoryService repositoryService){
+    public ProjectController(ProjectService projectService, HyperlinkService HyperlinkService){
         this.projectService = projectService;
-        this.repositoryService = repositoryService;
+        this.HyperlinkService = HyperlinkService;
     }
 
     @GetMapping("/repository/github/check")
     public ResponseEntity<String> checkGithubURL(@RequestParam("url") String url) {
-        if(repositoryService.checkGithubURL(url)) {
+        if(HyperlinkService.checkGithubURL(url)) {
             return ResponseEntity.status(HttpStatus.OK).body(successMessage);
         }
         else {
@@ -51,7 +55,7 @@ public class ProjectController {
 
     @GetMapping("/repository/sonar/check")
     public ResponseEntity<String> checkSonarURL(@RequestParam("url") String url) {
-        if(repositoryService.checkSonarURL(url)) {
+        if(HyperlinkService.checkSonarURL(url)) {
             return ResponseEntity.status(HttpStatus.OK).body(successMessage);
         }
         else {
@@ -72,10 +76,10 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/repository/sonar")
-    public ResponseEntity<String> addSonarRepository(@RequestBody AddSonarRepositoryDTO addSonarRepositoryDTO) {
+    public ResponseEntity<String> addSonarRepository(@RequestBody AddSonarQubeHyperlinkDTO addSonarQubeHyperlinkDTO) {
         try{
-            if(repositoryService.checkSonarURL(addSonarRepositoryDTO.getRepositoryURL())) {
-                if(projectService.addSonarRepo(addSonarRepositoryDTO)) {
+            if(HyperlinkService.checkSonarURL(addSonarQubeHyperlinkDTO.getRepositoryURL())) {
+                if(projectService.addSonarRepo(addSonarQubeHyperlinkDTO)) {
                     return ResponseEntity.status(HttpStatus.OK).body(successMessage);
                 } else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(failMessage);
@@ -92,10 +96,10 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/repository/github")
-    public ResponseEntity<String> addGithubRepository(@RequestBody AddGithubRepositoryDTO addGithubRepositoryDTO) {
+    public ResponseEntity<String> addGithubRepository(@RequestBody AddGithubRepositoryHyperlinkDTO addGithubRepositoryHyperlinkDTO) {
         try{
-            if(repositoryService.checkGithubURL(addGithubRepositoryDTO.getRepositoryURL())) {
-                if(projectService.addGithubRepo(addGithubRepositoryDTO)) {
+            if(HyperlinkService.checkGithubURL(addGithubRepositoryHyperlinkDTO.getRepositoryURL())) {
+                if(projectService.addGithubRepo(addGithubRepositoryHyperlinkDTO)) {
                     return ResponseEntity.status(HttpStatus.OK).body(successMessage);
                 } else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(failMessage);

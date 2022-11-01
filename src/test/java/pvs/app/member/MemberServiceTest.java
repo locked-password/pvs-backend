@@ -1,14 +1,13 @@
 package pvs.app.member;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
+import pvs.app.member.post.MemberDTO;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -17,31 +16,37 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
+@ExtendWith(SpringExtension.class)
+@Tag("Unit")
 public class MemberServiceTest {
     @Autowired
-    private MemberService memberService;
-
-    @MockBean
-    private RoleService mockRoleService;
+    private MemberService sut;
 
     @MockBean
     private MemberDAO mockMemberDAO;
+    private Member stubbingMember;
+    private MemberDTO stubbingMemberDTO;
 
-    private final Member member01 = new Member();
-    private final MemberDTO member01DTO = new MemberDTO();
-    private final Role userRole = new Role();
+    @MockBean
+    private RoleService mockRoleService;
+    private Role userRole;
+
+    public MemberServiceTest() {
+        stubbingMember = new Member();
+        stubbingMemberDTO = new MemberDTO();
+        userRole = new Role();
+    }
 
     @BeforeEach
     public void setup() {
-        member01.setMemberId(1L);
-        member01.setUsername("user");
-        member01.setPassword("1234");
+        stubbingMember.setMemberId(1L);
+        stubbingMember.setUsername("user");
+        stubbingMember.setPassword("1234");
 
-        member01DTO.setId(1L);
-        member01DTO.setUsername("user");
-        member01DTO.setPassword("1234");
+        stubbingMemberDTO.setId(stubbingMember.getMemberId());
+        stubbingMemberDTO.setUsername(stubbingMember.getUsername());
+        stubbingMemberDTO.setPassword(stubbingMember.getPassword());
 
         userRole.setRoleId(1L);
         userRole.setName("USER");
@@ -49,28 +54,30 @@ public class MemberServiceTest {
 
     @Test
     public void get() {
-        //context
-        when(mockMemberDAO.findById(1L))
-                .thenReturn(member01);
-        //when
-        MemberDTO memberDTO = memberService.get(1L);
+        // Context:
+        when(mockMemberDAO.findById(1L)).thenReturn(stubbingMember);
 
-        //then
-        Assertions.assertEquals(member01DTO.toString(), memberDTO.toString());
+        // When:
+        MemberDTO dto = sut.get(1L);
+
+        // Then:
+        Assertions.assertEquals(stubbingMemberDTO.toString(), dto.toString());
         verify(mockMemberDAO, times(1)).findById(1L);
     }
 
     @Test
     public void createUser() {
-        //context
-        when(mockRoleService.getByName("USER"))
-                .thenReturn(userRole);
-        when(mockMemberDAO.save(any(Member.class))).thenReturn(member01);
+        // Context
+        when(mockRoleService.getByName("USER")).thenReturn(userRole);
+        when(mockMemberDAO.save(any(Member.class))).thenReturn(stubbingMember);
 
-        //when
-        MemberDTO memberDTO = memberService.createUser(member01DTO);
-        //then
-        Assertions.assertEquals(member01DTO.toString(), memberDTO.toString());
+        // When
+        MemberDTO dto = new MemberDTO();
+        dto.setUsername("ABC");
+        dto.setPassword("123456");
+        MemberDTO memberDTO = sut.createUser(dto);
+
+        // Then
+        Assertions.assertEquals(stubbingMemberDTO.getId(), memberDTO.getId());
     }
-
 }
