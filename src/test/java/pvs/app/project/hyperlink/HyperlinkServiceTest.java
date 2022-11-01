@@ -41,21 +41,9 @@ public class HyperlinkServiceTest {
     }
 
     @Test
-    public void checkSonarURL_GivenValidURL_ThenReturnTrue() {
-        boolean exist = sut.checkSonarURL("http://140.124.181.143:9002/dashboard");
-        Assertions.assertTrue(exist);
-    }
-
-    @Test
     public void checkSonarURL_GivenInvalidURL_ThenReturnFalse() {
         boolean exist = sut.checkSonarURL("pvs-springboot");
         Assertions.assertFalse(exist);
-    }
-
-    @Test
-    public void checkGithubURL_GivenValidURL_ThenReturnTrue() {
-        boolean exist = sut.checkGithubURL("https://github.com/imper0502/rime-full-bopomofo");
-        Assertions.assertTrue(exist);
     }
 
     @Test
