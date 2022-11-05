@@ -9,9 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.api.github.commit.GithubCommit;
-import pvs.app.api.github.commit.GithubCommitDAO;
-import pvs.app.api.github.commit.GithubCommitService;
 import pvs.app.api.github.commit.post.GithubCommitDTO;
 
 import java.text.ParseException;
@@ -25,14 +22,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 public class GithubCommitServiceTest {
 
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private GithubCommitService sut;
-
     @MockBean
     private GithubCommitDAO mockGithubCommitDAO;
-
     private List<GithubCommit> githubCommits;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @BeforeEach
     public void setup() throws ParseException {

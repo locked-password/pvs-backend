@@ -12,20 +12,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 @SuppressWarnings("squid:S1192")
 public class HyperlinkService {
-    private final WebClient webClient;
-
-    private final String token = System.getenv("PVS_GITHUB_TOKEN");
-
     static final Logger logger = LogManager.getLogger(HyperlinkService.class.getName());
+    private final WebClient webClient;
+    private final String token = System.getenv("PVS_GITHUB_TOKEN");
 
     public HyperlinkService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.test}") String baseUrl) {
         this.webClient = webClientBuilder.baseUrl(baseUrl)
-                .defaultHeader("Authorization", "Bearer " + token )
+                .defaultHeader("Authorization", "Bearer " + token)
                 .build();
     }
 
     public boolean checkGithubURL(String url) {
-        if(!url.contains("github.com")){
+        if (!url.contains("github.com")) {
             return false;
         }
         String targetURL = url.replace("github.com", "api.github.com/repos");
@@ -36,14 +34,14 @@ public class HyperlinkService {
                 .uri(targetURL)
                 .exchange()
                 .doOnSuccess(clientResponse ->
-                    result.set(clientResponse.statusCode().equals(HttpStatus.OK))
+                        result.set(clientResponse.statusCode().equals(HttpStatus.OK))
                 )
                 .block();
         return result.get();
     }
 
     public boolean checkSonarURL(String url) {
-        if(!url.contains("140.124.181.143")){
+        if (!url.contains("140.124.181.143")) {
             return false;
         }
 

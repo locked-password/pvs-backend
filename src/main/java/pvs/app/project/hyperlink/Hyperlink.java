@@ -11,7 +11,7 @@ import java.util.Set;
 public class Hyperlink {
     @Id
     @NotNull
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long hyperlinkId;
 
     @NotNull
@@ -30,28 +30,28 @@ public class Hyperlink {
         return this.hyperlinkId;
     }
 
-    public @NotNull String getUrl() {
-        return this.url;
-    }
-
-    public @NotNull String getType() {
-        return this.type;
-    }
-
-    public Set<GithubCommit> getGithubCommitSet() {
-        return this.githubCommitSet;
-    }
-
     public void setHyperlinkId(@NotNull Long hyperlinkId) {
         this.hyperlinkId = hyperlinkId;
+    }
+
+    public @NotNull String getUrl() {
+        return this.url;
     }
 
     public void setUrl(@NotNull String url) {
         this.url = url;
     }
 
+    public @NotNull String getType() {
+        return this.type;
+    }
+
     public void setType(@NotNull String type) {
         this.type = type;
+    }
+
+    public Set<GithubCommit> getGithubCommitSet() {
+        return this.githubCommitSet;
     }
 
     public void setGithubCommitSet(Set<GithubCommit> githubCommitSet) {

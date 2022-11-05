@@ -10,17 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.member.role.Role;
-import pvs.app.member.role.RoleDAO;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RoleDAOIntegrationTest {
+    Role userRole;
     @Autowired
     private RoleDAO roleDAO;
-
-    Role userRole;
 
     @BeforeEach
     public void setup() {

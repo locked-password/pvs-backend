@@ -2,8 +2,9 @@ package pvs.app.api.github.issue.get;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
-import org.joda.time.format.ISODateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.util.Date;
 
 @Data
@@ -36,7 +37,7 @@ public class GithubIssueDTO {
     }
 
     public void setClosedAt(JsonNode closedAt) {
-        if(closedAt != null && closedAt.textValue() != null) {
+        if (closedAt != null && closedAt.textValue() != null) {
             DateTimeFormatter isoParser = ISODateTimeFormat.dateTimeNoMillis();
             this.closedAt = isoParser.parseDateTime(closedAt.toString().replace("\"", "")).toDate();
         }

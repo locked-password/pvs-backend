@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.api.github.commit.GithubCommit;
-import pvs.app.api.github.commit.GithubCommitDAO;
 
 import java.util.Date;
 import java.util.List;
@@ -20,11 +18,10 @@ import java.util.List;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GithubCommitDAOIntegrationTest {
 
-    @Autowired
-    private GithubCommitDAO githubCommitDAO;
-
     private final GithubCommit githubCommit01 = new GithubCommit();
     private final GithubCommit githubCommit02 = new GithubCommit();
+    @Autowired
+    private GithubCommitDAO githubCommitDAO;
 
     @BeforeEach
     public void setup() {

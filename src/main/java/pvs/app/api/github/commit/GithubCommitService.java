@@ -44,7 +44,7 @@ public class GithubCommitService {
 
     public GithubCommitDTO getLastCommit(String repoOwner, String repoName) {
         GithubCommit githubCommit = githubCommitDAO.findFirstByRepoOwnerAndRepoNameOrderByCommittedDateDesc(repoOwner, repoName);
-        if(null == githubCommit) {
+        if (null == githubCommit) {
             return null;
         }
         GithubCommitDTO dto = modelMapper.map(githubCommit, GithubCommitDTO.class);

@@ -14,9 +14,8 @@ import java.util.Optional;
 
 public class GithubIssueLoaderThread extends Thread {
 
-    private static final Object lock = new Object();
     static final Logger logger = LogManager.getLogger(GithubIssueLoaderThread.class.getName());
-
+    private static final Object lock = new Object();
     private final List<GithubIssueDTO> githubIssueDTOList;
     private final String repoOwner;
     private final String repoName;
@@ -38,9 +37,9 @@ public class GithubIssueLoaderThread extends Thread {
     @Override
     public void run() {
         String responseJson = Objects.requireNonNull(this.webClient.get()
-                .uri("/" + this.repoOwner + "/" + this.repoName + "/issues?page=" + this.page + "&per_page=100&state=all")
-                .exchange()
-                .block())
+                        .uri("/" + this.repoOwner + "/" + this.repoName + "/issues?page=" + this.page + "&per_page=100&state=all")
+                        .exchange()
+                        .block())
                 .bodyToMono(String.class)
                 .block();
         ObjectMapper mapper = new ObjectMapper();

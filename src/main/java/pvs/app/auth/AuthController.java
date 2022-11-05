@@ -22,7 +22,7 @@ public class AuthController {
      * 登录
      */
     @PostMapping(value = "/auth/login")
-    public String login( @RequestBody MemberDTO memberDTO ) {
+    public String login(@RequestBody MemberDTO memberDTO) {
         // 登录成功会返回Token给用户
         return authService.login(memberDTO.getUsername(), memberDTO.getPassword());
     }

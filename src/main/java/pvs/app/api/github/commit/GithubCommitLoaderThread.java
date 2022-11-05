@@ -40,29 +40,29 @@ public class GithubCommitLoaderThread extends Thread {
         Map<String, Object> graphQlQuery = new HashMap<>();
         graphQlQuery.put("query", "{repository(owner: \"" + this.repoOwner + "\", name:\"" + this.repoName + "\") {" +
                 "defaultBranchRef {" +
-                    "target {" +
-                        "... on Commit {" +
-                            "history (last:100, before: \"" + this.cursor + "\") {" +
-                                "nodes {" +
-                                        "committedDate\n" +
-                                        "additions\n" +
-                                        "deletions\n" +
-                                        "changedFiles\n" +
-                                        "author {" +
-                                            "email\n" +
-                                            "name\n" +
-                                        "}" +
-                                    "}" +
-                                "}" +
-                            "}" +
-                        "}" +
-                    "}" +
+                "target {" +
+                "... on Commit {" +
+                "history (last:100, before: \"" + this.cursor + "\") {" +
+                "nodes {" +
+                "committedDate\n" +
+                "additions\n" +
+                "deletions\n" +
+                "changedFiles\n" +
+                "author {" +
+                "email\n" +
+                "name\n" +
+                "}" +
+                "}" +
+                "}" +
+                "}" +
+                "}" +
+                "}" +
                 "}}");
 
         String responseJson = Objects.requireNonNull(this.webClient.post()
-                .body(BodyInserters.fromObject(graphQlQuery))
-                .exchange()
-                .block())
+                        .body(BodyInserters.fromObject(graphQlQuery))
+                        .exchange()
+                        .block())
                 .bodyToMono(String.class)
                 .block();
 

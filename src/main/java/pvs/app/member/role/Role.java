@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 public class Role implements GrantedAuthority {
     @Id
     @NotNull
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long roleId;
 
-    @Column(unique=true)
+    @Column(unique = true)
     @NotNull
     private String name;
 

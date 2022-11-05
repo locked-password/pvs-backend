@@ -22,10 +22,10 @@ import java.util.Set;
 @Tag("Integration")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ProjectDAOIntegrationTest {
-    @Autowired
-    private ProjectDAO projectDAO;
     Set<Project> projects;
     Set<Hyperlink> repositories;
+    @Autowired
+    private ProjectDAO projectDAO;
 
     @BeforeEach
     public void setup() {

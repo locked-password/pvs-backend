@@ -22,24 +22,21 @@ import java.io.IOException;
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    static final Logger logger = LogManager.getLogger(JwtTokenFilter.class.getName());
-
-    @Qualifier("userDetailsServiceImpl")
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
     /**
      * 存放Token的Header Key
      */
     public static final String HEADER_STRING = "Authorization";
+    static final Logger logger = LogManager.getLogger(JwtTokenFilter.class.getName());
+    @Qualifier("userDetailsServiceImpl")
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain) throws ServletException, IOException {
 
-        String token = request.getHeader( HEADER_STRING );
+        String token = request.getHeader(HEADER_STRING);
         if (null != token) {
             String username = jwtTokenUtil.getUsernameFromToken(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

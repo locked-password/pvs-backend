@@ -18,14 +18,12 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = Application.class)
 public class RoleServiceTest {
 
-    @Autowired
-    private RoleService sut;
-
-    @MockBean
-    private RoleDAO mockRoleDAO;
-
     Role role;
     RoleDTO roleDTO;
+    @Autowired
+    private RoleService sut;
+    @MockBean
+    private RoleDAO mockRoleDAO;
 
     @BeforeEach
     public void setup() {

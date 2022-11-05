@@ -10,8 +10,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.api.github.commit.GithubCommitLoaderThread;
 import pvs.app.api.github.commit.GithubCommitService;
-import pvs.app.api.github.issue.get.GithubIssueDTO;
 import pvs.app.api.github.issue.GithubIssueLoaderThread;
+import pvs.app.api.github.issue.get.GithubIssueDTO;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,10 +24,8 @@ public class GithubApiService {
     static final Logger logger = LogManager.getLogger(GithubApiService.class.getName());
 
     private final WebClient webClient;
-
-    private Map<String, Object> graphQlQuery;
-
     private final GithubCommitService githubCommitService;
+    private Map<String, Object> graphQlQuery;
 
     public GithubApiService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.github}") String baseUrl, GithubCommitService githubCommitService) {
         String token = System.getenv("PVS_GITHUB_TOKEN");
@@ -48,45 +46,45 @@ public class GithubApiService {
         String since = dateToISO8601(lastUpdate);
         Map<String, Object> graphQl = new HashMap<>();
         graphQl.put("query", "{repository(owner: \"" + owner + "\", name:\"" + name + "\") {" +
-                            "defaultBranchRef {" +
-                                "target {" +
-                                    "... on Commit {" +
-                                        "history (since: \"" + since + "\") {" +
-                                            "totalCount\n" +
-                                            "pageInfo {" +
-                                                "startCursor" +
-                                            "}" +
-                                        "}" +
-                                    "}" +
-                                "}" +
-                            "}" +
-                        "}}");
+                "defaultBranchRef {" +
+                "target {" +
+                "... on Commit {" +
+                "history (since: \"" + since + "\") {" +
+                "totalCount\n" +
+                "pageInfo {" +
+                "startCursor" +
+                "}" +
+                "}" +
+                "}" +
+                "}" +
+                "}" +
+                "}}");
         this.graphQlQuery = graphQl;
     }
 
     private void setGraphQlGetIssuesTotalCountQuery(String owner, String name) {
         Map<String, Object> graphQl = new HashMap<>();
         graphQl.put("query", "{repository(owner: \"" + owner + "\", name:\"" + name + "\") {" +
-                                "issues (first: 100) {" +
-                                    "totalCount" +
-                                "}" +
-                            "}}");
+                "issues (first: 100) {" +
+                "totalCount" +
+                "}" +
+                "}}");
         this.graphQlQuery = graphQl;
     }
 
     private void setGraphQlGetAvatarQuery(String owner) {
         Map<String, Object> graphQl = new HashMap<>();
         graphQl.put("query", "{search(type: USER, query: \"in:username " + owner + "\", first: 1) {" +
-                    "edges {" +
-                        "node {" +
-                            "... on User {" +
-                                "avatarUrl" +
-                            "}" +
-                            "... on Organization {" +
-                                "avatarUrl" +
-                            "}" +
-                        "}" +
-                    "}}}");
+                "edges {" +
+                "node {" +
+                "... on User {" +
+                "avatarUrl" +
+                "}" +
+                "... on Organization {" +
+                "avatarUrl" +
+                "}" +
+                "}" +
+                "}}}");
 
         this.graphQlQuery = graphQl;
     }
@@ -95,9 +93,9 @@ public class GithubApiService {
         this.setGraphQlGetCommitsTotalCountAndCursorQuery(owner, name, lastUpdate);
 
         String responseJson = Objects.requireNonNull(this.webClient.post()
-                .body(BodyInserters.fromObject(this.graphQlQuery))
-                .exchange()
-                .block())
+                        .body(BodyInserters.fromObject(this.graphQlQuery))
+                        .exchange()
+                        .block())
                 .bodyToMono(String.class)
                 .block();
 
@@ -110,26 +108,26 @@ public class GithubApiService {
                 .map(branch -> branch.get("target"))
                 .map(tag -> tag.get("history"));
 
-        if(paginationInfo.isPresent()) {
+        if (paginationInfo.isPresent()) {
             double totalCount = paginationInfo.get().get("totalCount").asInt();
             List<GithubCommitLoaderThread> githubCommitLoaderThreadList = new ArrayList<>();
 
             if (totalCount != 0) {
                 String cursor = paginationInfo.get().get("pageInfo").get("startCursor").textValue()
                         .split(" ")[0];
-                for (int i = 1; i <= Math.ceil(totalCount/100); i++) {
+                for (int i = 1; i <= Math.ceil(totalCount / 100); i++) {
                     GithubCommitLoaderThread githubCommitLoaderThread =
                             new GithubCommitLoaderThread(
                                     this.webClient,
                                     this.githubCommitService,
                                     owner,
                                     name,
-                                    cursor + " " + (i*100));
+                                    cursor + " " + (i * 100));
                     githubCommitLoaderThreadList.add(githubCommitLoaderThread);
                     githubCommitLoaderThread.start();
                 }
 
-                for (GithubCommitLoaderThread thread: githubCommitLoaderThreadList) {
+                for (GithubCommitLoaderThread thread : githubCommitLoaderThreadList) {
                     thread.join();
                 }
             }
@@ -139,14 +137,14 @@ public class GithubApiService {
         }
     }
 
-    public List<GithubIssueDTO> getIssuesFromGithub(String owner, String name) throws IOException, InterruptedException  {
+    public List<GithubIssueDTO> getIssuesFromGithub(String owner, String name) throws IOException, InterruptedException {
         List<GithubIssueDTO> githubIssueDTOList = new ArrayList<>();
         this.setGraphQlGetIssuesTotalCountQuery(owner, name);
 
         String responseJson = Objects.requireNonNull(this.webClient.post()
-                .body(BodyInserters.fromObject(this.graphQlQuery))
-                .exchange()
-                .block())
+                        .body(BodyInserters.fromObject(this.graphQlQuery))
+                        .exchange()
+                        .block())
                 .bodyToMono(String.class)
                 .block();
 
@@ -157,12 +155,12 @@ public class GithubApiService {
                 .map(data -> data.get("repository"))
                 .map(repo -> repo.get("issues"));
 
-        if(paginationInfo.isPresent()) {
+        if (paginationInfo.isPresent()) {
             double totalCount = paginationInfo.get().get("totalCount").asInt();
             List<GithubIssueLoaderThread> githubIssueLoaderThreadList = new ArrayList<>();
 
             if (0 != totalCount) {
-                for (int i = 1; i <= Math.ceil(totalCount/100); i++) {
+                for (int i = 1; i <= Math.ceil(totalCount / 100); i++) {
                     GithubIssueLoaderThread githubIssueLoaderThread =
                             new GithubIssueLoaderThread(
                                     githubIssueDTOList,
@@ -173,7 +171,7 @@ public class GithubApiService {
                     githubIssueLoaderThread.start();
                 }
 
-                for (GithubIssueLoaderThread thread: githubIssueLoaderThreadList) {
+                for (GithubIssueLoaderThread thread : githubIssueLoaderThreadList) {
                     thread.join();
                 }
             }
@@ -186,9 +184,9 @@ public class GithubApiService {
     public JsonNode getAvatarURL(String owner) throws IOException {
         this.setGraphQlGetAvatarQuery(owner);
         String responseJson = Objects.requireNonNull(this.webClient.post()
-                .body(BodyInserters.fromObject(this.graphQlQuery))
-                .exchange()
-                .block())
+                        .body(BodyInserters.fromObject(this.graphQlQuery))
+                        .exchange()
+                        .block())
                 .bodyToMono(String.class)
                 .block();
 
@@ -200,7 +198,7 @@ public class GithubApiService {
                 .map(edges -> edges.get("node"))
                 .map(node -> node.get("avatarUrl"));
 
-        return avatar.orElse( null);
+        return avatar.orElse(null);
     }
 }
 

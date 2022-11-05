@@ -24,14 +24,12 @@ import java.util.List;
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class SonarApiController {
 
-    @Value("${message.exception}")
-    private String exceptionMessage;
-
-    @Value("${message.fail}")
-    private String failMessage;
-
     static final Logger logger = LogManager.getLogger(SonarApiController.class.getName());
     private final SonarApiService sonarApiService;
+    @Value("${message.exception}")
+    private String exceptionMessage;
+    @Value("${message.fail}")
+    private String failMessage;
 
     public SonarApiController(SonarApiService sonarApiService) {
         this.sonarApiService = sonarApiService;
@@ -42,7 +40,7 @@ public class SonarApiController {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<CodeCoverageDTO> coverages = sonarApiService.getSonarCodeCoverage(component);
-            if(!coverages.isEmpty()) {
+            if (!coverages.isEmpty()) {
                 String coverageString = objectMapper.writeValueAsString(coverages);
 
                 return ResponseEntity.status(HttpStatus.OK)
@@ -64,7 +62,7 @@ public class SonarApiController {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<BugDTO> bugList = sonarApiService.getSonarBug(component);
-            if(!bugList.isEmpty()) {
+            if (!bugList.isEmpty()) {
                 String bugListString = objectMapper.writeValueAsString(bugList);
 
                 return ResponseEntity.status(HttpStatus.OK)
@@ -86,7 +84,7 @@ public class SonarApiController {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<CodeSmellDTO> codeSmellList = sonarApiService.getSonarCodeSmell(component);
-            if(!codeSmellList.isEmpty()) {
+            if (!codeSmellList.isEmpty()) {
                 String codeSmellListString = objectMapper.writeValueAsString(codeSmellList);
 
                 return ResponseEntity.status(HttpStatus.OK)
@@ -108,7 +106,7 @@ public class SonarApiController {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<DuplicationDTO> duplicationList = sonarApiService.getDuplication(component);
-            if(!duplicationList.isEmpty()) {
+            if (!duplicationList.isEmpty()) {
                 String duplicationListString = objectMapper.writeValueAsString(duplicationList);
 
                 return ResponseEntity.status(HttpStatus.OK)

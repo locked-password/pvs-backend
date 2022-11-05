@@ -14,7 +14,7 @@ public class GithubCommit {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -42,7 +42,7 @@ public class GithubCommit {
     private String authorEmail;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="hyperlink_id")
+    @JoinColumn(name = "hyperlink_id")
     private Hyperlink hyperlink;
 
     @Override

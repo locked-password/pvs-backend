@@ -23,7 +23,7 @@ public class AuthService {
     private final JwtTokenUtil jwtTokenUtil;
 
     AuthService(AuthenticationManager authenticationManager,
-                @Qualifier("userDetailsServiceImpl")UserDetailsService userDetailsService,
+                @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
                 JwtTokenUtil jwtTokenUtil) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
@@ -31,7 +31,7 @@ public class AuthService {
     }
 
     public String login(String username, String password) {
-        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( username, password );
+        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(upToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);

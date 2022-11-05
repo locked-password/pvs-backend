@@ -23,13 +23,11 @@ import java.util.List;
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class GithubApiController {
 
-    @Value("${message.exception}")
-    private String exceptionMessage;
-    
     static final Logger logger = LogManager.getLogger(GithubApiController.class.getName());
-
     private final GithubApiService githubApiService;
     private final GithubCommitService githubCommitService;
+    @Value("${message.exception}")
+    private String exceptionMessage;
 
     public GithubApiController(GithubApiService githubApiService, GithubCommitService githubCommitService) {
         this.githubApiService = githubApiService;
@@ -50,7 +48,7 @@ public class GithubApiController {
             lastUpdate = githubCommitDTO.getCommittedDate();
         }
 
-        try{
+        try {
             callAPISuccess = githubApiService.getCommitsFromGithub(repoOwner, repoName, lastUpdate);
         } catch (InterruptedException | IOException e) {
             Thread.currentThread().interrupt();
@@ -60,7 +58,7 @@ public class GithubApiController {
                     .body(exceptionMessage);
         }
 
-        if(callAPISuccess) {
+        if (callAPISuccess) {
             return ResponseEntity.status(HttpStatus.OK).body("success get commit data and save to database");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -90,14 +88,14 @@ public class GithubApiController {
     }
 
     @GetMapping("/github/issues/{repoOwner}/{repoName}")
-    public ResponseEntity<String> getIssues(@PathVariable("repoOwner") String repoOwner, @PathVariable("repoName") String repoName){
+    public ResponseEntity<String> getIssues(@PathVariable("repoOwner") String repoOwner, @PathVariable("repoName") String repoName) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         List<GithubIssueDTO> githubIssueDTOs;
 
         try {
             githubIssueDTOs = githubApiService.getIssuesFromGithub(repoOwner, repoName);
-            if(null == githubIssueDTOs) {
+            if (null == githubIssueDTOs) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("cannot get issue data");
             }

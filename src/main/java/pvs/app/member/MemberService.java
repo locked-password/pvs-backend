@@ -30,7 +30,7 @@ public class MemberService {
 
         Set<Role> roleSet = new HashSet<>();
         Role userRole = roleService.getByName("USER");
-        if(userRole != null) {
+        if (userRole != null) {
             roleSet.add(userRole);
             member.setAuthorities(roleSet);
         }

@@ -31,12 +31,12 @@ public class JwtTokenUtil implements Serializable {
      */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>(16);
-        claims.put( CLAIM_KEY_USERNAME, userDetails.getUsername() );
+        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
 
         return Jwts.builder()
-                .setClaims( claims )
-                .setExpiration( new Date( Instant.now().toEpochMilli() + EXPIRATION_TIME  ) )
-                .signWith( SignatureAlgorithm.HS512, SECRET )
+                .setClaims(claims)
+                .setExpiration(new Date(Instant.now().toEpochMilli() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
 
@@ -45,31 +45,31 @@ public class JwtTokenUtil implements Serializable {
      */
     public Boolean validateToken(String token, UserDetails userDetails) {
         Member member = (Member) userDetails;
-        String username = getUsernameFromToken( token );
+        String username = getUsernameFromToken(token);
 
-        return (username.equals( member.getUsername() ) && !isTokenExpired( token ));
+        return (username.equals(member.getUsername()) && !isTokenExpired(token));
     }
 
     /**
      * 獲取token是否過期
      */
     public Boolean isTokenExpired(String token) {
-        Date expiration = getExpirationDateFromToken( token );
-        return expiration.before( new Date() );
+        Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
     }
 
     /**
      * 根據token獲取username
      */
     public String getUsernameFromToken(String token) {
-        return getClaimsFromToken( token ).getSubject();
+        return getClaimsFromToken(token).getSubject();
     }
 
     /**
      * 獲取token的過期時間
      */
     public Date getExpirationDateFromToken(String token) {
-        return getClaimsFromToken( token ).getExpiration();
+        return getClaimsFromToken(token).getExpiration();
     }
 
     /**
@@ -77,8 +77,8 @@ public class JwtTokenUtil implements Serializable {
      */
     private Claims getClaimsFromToken(String token) {
         return Jwts.parser()
-                .setSigningKey( SECRET )
-                .parseClaimsJws( token )
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token)
                 .getBody();
     }
 

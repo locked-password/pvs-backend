@@ -13,12 +13,12 @@ public class HyperlinkDTO {
         return this.url;
     }
 
-    public String getType() {
-        return this.type;
-    }
-
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     public void setType(String type) {

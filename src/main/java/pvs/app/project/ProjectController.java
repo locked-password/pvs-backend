@@ -22,22 +22,16 @@ import java.util.Optional;
 public class ProjectController {
 
     static final Logger logger = LogManager.getLogger(ProjectController.class.getName());
-
+    private final ProjectService projectService;
+    private final HyperlinkService HyperlinkService;
     @Value("${message.exception}")
     private String exceptionMessage;
-
     @Value("${message.invalid.url}")
     private String urlInvalidMessage;
-
     @Value("${message.success}")
     private String successMessage;
-
     @Value("${message.fail}")
     private String failMessage;
-
-    private final ProjectService projectService;
-
-    private final HyperlinkService HyperlinkService;
 
     public ProjectController(ProjectService projectService, HyperlinkService HyperlinkService) {
         this.projectService = projectService;
