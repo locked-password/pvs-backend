@@ -21,6 +21,21 @@ ifeq ($(shell docker images -q ${MAVEN_IMAGE} 2> /dev/null),)
 	docker pull ${MAVEN_IMAGE}
 endif
 
-.PHONY: clean
-clean:
-	docker image rm ${current_dir}:mvn
+POSTGRES_IMAGE := postgres:latest
+RUN_POSTGRES := \
+	docker run --rm -d \
+		-e POSTGRES_DB=PVS \
+		-e POSTGRES_USER=pvs-backend \
+		-e POSTGRES_PASSWORD=HappyTeamMem6er5LoveTar0t \
+		-p 5432:5432 \
+		-v postgres-data:/var/lib/postgresql/data \
+		${POSTGRES_IMAGE}
+
+.PHONY: database postgres
+database: postgres
+	${RUN_POSTGRES}
+
+postgres:
+ifeq ($(shell docker images -q ${POSTGRES_IMAGE} 2> /dev/null),)
+	doker pull ${POSTGRES_IMAGE}
+endif
