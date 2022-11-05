@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: dev
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    time-zone: Asia/Taipei
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/PVS
@@ -16,13 +21,22 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  jackson:
-    time-zone: Asia/Taipei
 
 server:
   port: 9100
   servlet:
     context-path: /pvs
+
+webClient:
+  baseUrl:
+    sonar: "http://140.124.181.143:9002/api"
+    github: "https://api.github.com/graphql"
+    test: ""
+
+springfox:
+  documentation:
+    open-api:
+      enabled: true
 
 message:
   exception: "exception error"
@@ -30,9 +44,3 @@ message:
   fail: "你失敗了!"
   invalid:
     url: "你連URL都不會打嗎?"
-
-webClient:
-  baseUrl:
-    sonar: "http://140.124.181.143:9002/api"
-    github: "https://api.github.com/graphql"
-    test: ""
