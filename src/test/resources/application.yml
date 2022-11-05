@@ -4,6 +4,20 @@ spring:
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
     username: sa
     password: sa
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+springfox:
+  documentation:
+    open-api:
+      enabled: true
+
+webClient:
+  baseUrl:
+    sonar: "http://140.124.181.143:9002/api"
+    github: "https://api.github.com/graphql"
+    test: ""
 
 message:
   exception: "exception error"
@@ -11,9 +25,3 @@ message:
   fail: "你失敗了!"
   invalid:
     url: "你連URL都不會打嗎?"
-
-webClient:
-  baseUrl:
-    sonar: "http://140.124.181.143:9002/api"
-    github: "https://api.github.com/graphql"
-    test: ""
