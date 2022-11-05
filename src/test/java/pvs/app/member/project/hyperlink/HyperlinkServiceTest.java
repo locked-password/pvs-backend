@@ -1,4 +1,4 @@
-package pvs.app.project.hyperlink;
+package pvs.app.member.project.hyperlink;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
+import pvs.app.member.project.hyperlink.HyperlinkService;
 
 @SpringBootTest(classes = Application.class)
 @ExtendWith(SpringExtension.class)

@@ -2,7 +2,6 @@ package pvs.app.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import pvs.app.member.post.MemberDTO;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 

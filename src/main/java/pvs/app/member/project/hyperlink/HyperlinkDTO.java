@@ -1,4 +1,4 @@
-package pvs.app.project.hyperlink;
+package pvs.app.member.project.hyperlink;
 
 import java.util.Objects;
 
@@ -27,8 +27,7 @@ public class HyperlinkDTO {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof HyperlinkDTO)) return false;
-        final HyperlinkDTO other = (HyperlinkDTO) o;
+        if (!(o instanceof final HyperlinkDTO other)) return false;
         if (!other.canEqual(this)) return false;
         final Object this$url = this.getUrl();
         final Object other$url = other.getUrl();

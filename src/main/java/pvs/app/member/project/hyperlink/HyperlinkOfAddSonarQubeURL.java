@@ -1,9 +1,9 @@
-package pvs.app.project.hyperlink.post;
+package pvs.app.member.project.hyperlink;
 
 import lombok.Data;
 
 @Data
-public class AddSonarQubeHyperlinkDTO {
+public class HyperlinkOfAddSonarQubeURL {
     private Long projectId;
     private String repositoryURL;
 }

@@ -1,4 +1,4 @@
-package pvs.app.project;
+package pvs.app.member.project;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.repository.CrudRepository;

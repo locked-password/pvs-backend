@@ -1,14 +1,14 @@
-package pvs.app.project.get;
+package pvs.app.member.project;
 
 import lombok.Data;
-import pvs.app.project.hyperlink.HyperlinkDTO;
+import pvs.app.member.project.hyperlink.HyperlinkDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Data
-public class ResponseProjectDTO {
+public class ProjectOfResponse {
     Long projectId;
     String projectName;
     String avatarURL;
@@ -18,7 +18,7 @@ public class ResponseProjectDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ResponseProjectDTO that = (ResponseProjectDTO) o;
+        ProjectOfResponse that = (ProjectOfResponse) o;
         return Objects.equals(projectId, that.projectId) &&
                 Objects.equals(projectName, that.projectName) &&
                 Objects.equals(avatarURL, that.avatarURL) &&

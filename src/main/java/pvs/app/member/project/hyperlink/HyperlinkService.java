@@ -1,7 +1,5 @@
-package pvs.app.project.hyperlink;
+package pvs.app.member.project.hyperlink;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,11 +10,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 @SuppressWarnings("squid:S1192")
 public class HyperlinkService {
-    static final Logger logger = LogManager.getLogger(HyperlinkService.class.getName());
     private final WebClient webClient;
-    private final String token = System.getenv("PVS_GITHUB_TOKEN");
 
     public HyperlinkService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.test}") String baseUrl) {
+        String token = System.getenv("PVS_GITHUB_TOKEN");
         this.webClient = webClientBuilder.baseUrl(baseUrl)
                 .defaultHeader("Authorization", "Bearer " + token)
                 .build();

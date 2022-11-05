@@ -1,4 +1,4 @@
-package pvs.app.project.hyperlink;
+package pvs.app.member.project.hyperlink;
 
 import pvs.app.api.github.commit.GithubCommit;
 

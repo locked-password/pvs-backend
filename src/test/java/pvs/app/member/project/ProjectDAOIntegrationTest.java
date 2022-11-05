@@ -1,4 +1,4 @@
-package pvs.app.project;
+package pvs.app.member.project;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.project.hyperlink.Hyperlink;
+import pvs.app.member.project.Project;
+import pvs.app.member.project.ProjectDAO;
+import pvs.app.member.project.hyperlink.Hyperlink;
 
 import java.util.HashSet;
 import java.util.List;

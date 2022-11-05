@@ -1,4 +1,4 @@
-package pvs.app.member.post;
+package pvs.app.member;
 
 import lombok.Data;
 

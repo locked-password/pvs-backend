@@ -1,6 +1,6 @@
-package pvs.app.project;
+package pvs.app.member.project;
 
-import pvs.app.project.hyperlink.Hyperlink;
+import pvs.app.member.project.hyperlink.Hyperlink;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

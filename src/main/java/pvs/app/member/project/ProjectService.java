@@ -1,16 +1,14 @@
-package pvs.app.project;
+package pvs.app.member.project;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import pvs.app.api.github.GithubApiService;
-import pvs.app.project.get.ResponseProjectDTO;
-import pvs.app.project.hyperlink.Hyperlink;
-import pvs.app.project.hyperlink.HyperlinkDTO;
-import pvs.app.project.hyperlink.post.AddGithubRepositoryHyperlinkDTO;
-import pvs.app.project.hyperlink.post.AddSonarQubeHyperlinkDTO;
-import pvs.app.project.post.CreateProjectDTO;
+import pvs.app.member.project.hyperlink.Hyperlink;
+import pvs.app.member.project.hyperlink.HyperlinkDTO;
+import pvs.app.member.project.hyperlink.HyperlinkOfAddGithubURL;
+import pvs.app.member.project.hyperlink.HyperlinkOfAddSonarQubeURL;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class ProjectService {
         this.githubApiService = githubApiService;
     }
 
-    public void create(CreateProjectDTO projectDTO) throws IOException {
+    public void create(ProjectOfCreation projectDTO) throws IOException {
         Project savedProject;
         Project project = new Project();
         project.setMemberId(1L);
@@ -37,26 +35,26 @@ public class ProjectService {
         savedProject = projectDAO.save(project);
 
         if (!projectDTO.getGithubRepositoryURL().equals("")) {
-            AddGithubRepositoryHyperlinkDTO addGithubRepositoryHyperlinkDTO = new AddGithubRepositoryHyperlinkDTO();
-            addGithubRepositoryHyperlinkDTO.setProjectId(savedProject.getProjectId());
-            addGithubRepositoryHyperlinkDTO.setRepositoryURL(projectDTO.getGithubRepositoryURL());
-            addGithubRepo(addGithubRepositoryHyperlinkDTO);
+            HyperlinkOfAddGithubURL hyperlinkOfAddGithubURL = new HyperlinkOfAddGithubURL();
+            hyperlinkOfAddGithubURL.setProjectId(savedProject.getProjectId());
+            hyperlinkOfAddGithubURL.setRepositoryURL(projectDTO.getGithubRepositoryURL());
+            addGithubRepo(hyperlinkOfAddGithubURL);
         }
 
         if (!projectDTO.getSonarRepositoryURL().equals("")) {
-            AddSonarQubeHyperlinkDTO addSonarQubeHyperlinkDTO = new AddSonarQubeHyperlinkDTO();
-            addSonarQubeHyperlinkDTO.setProjectId(savedProject.getProjectId());
-            addSonarQubeHyperlinkDTO.setRepositoryURL(projectDTO.getSonarRepositoryURL());
-            addSonarRepo(addSonarQubeHyperlinkDTO);
+            HyperlinkOfAddSonarQubeURL hyperlinkOfAddSonarQubeURL = new HyperlinkOfAddSonarQubeURL();
+            hyperlinkOfAddSonarQubeURL.setProjectId(savedProject.getProjectId());
+            hyperlinkOfAddSonarQubeURL.setRepositoryURL(projectDTO.getSonarRepositoryURL());
+            addSonarRepo(hyperlinkOfAddSonarQubeURL);
         }
     }
 
-    public List<ResponseProjectDTO> getMemberProjects(Long memberId) {
+    public List<ProjectOfResponse> getMemberProjects(Long memberId) {
         List<Project> projectList = projectDAO.findByMemberId(memberId);
-        List<ResponseProjectDTO> projectDTOList = new ArrayList<>();
+        List<ProjectOfResponse> projectDTOList = new ArrayList<>();
 
         for (Project project : projectList) {
-            ResponseProjectDTO projectDTO = new ResponseProjectDTO();
+            ProjectOfResponse projectDTO = new ProjectOfResponse();
             projectDTO.setProjectId(project.getProjectId());
             projectDTO.setProjectName(project.getName());
             projectDTO.setAvatarURL(project.getAvatarURL());
@@ -71,12 +69,12 @@ public class ProjectService {
         return projectDTOList;
     }
 
-    public boolean addSonarRepo(AddSonarQubeHyperlinkDTO addSonarQubeHyperlinkDTO) {
-        Optional<Project> projectOptional = projectDAO.findById(addSonarQubeHyperlinkDTO.getProjectId());
+    public boolean addSonarRepo(HyperlinkOfAddSonarQubeURL hyperlinkOfAddSonarQubeURL) {
+        Optional<Project> projectOptional = projectDAO.findById(hyperlinkOfAddSonarQubeURL.getProjectId());
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             Hyperlink hyperlink = new Hyperlink();
-            hyperlink.setUrl(addSonarQubeHyperlinkDTO.getRepositoryURL());
+            hyperlink.setUrl(hyperlinkOfAddSonarQubeURL.getRepositoryURL());
             hyperlink.setType("sonar");
             project.getHyperlinkSet().add(hyperlink);
             projectDAO.save(project);
@@ -86,11 +84,11 @@ public class ProjectService {
         }
     }
 
-    public boolean addGithubRepo(AddGithubRepositoryHyperlinkDTO addGithubRepositoryHyperlinkDTO) throws IOException {
-        Optional<Project> projectOptional = projectDAO.findById(addGithubRepositoryHyperlinkDTO.getProjectId());
+    public boolean addGithubRepo(HyperlinkOfAddGithubURL hyperlinkOfAddGithubURL) throws IOException {
+        Optional<Project> projectOptional = projectDAO.findById(hyperlinkOfAddGithubURL.getProjectId());
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
-            String url = addGithubRepositoryHyperlinkDTO.getRepositoryURL();
+            String url = hyperlinkOfAddGithubURL.getRepositoryURL();
             Hyperlink hyperlink = new Hyperlink();
             hyperlink.setUrl(url);
             hyperlink.setType("github");
