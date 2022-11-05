@@ -21,7 +21,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/sonarqube-agent", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SonarApiController {
 
     static final Logger logger = LogManager.getLogger(SonarApiController.class.getName());
@@ -35,7 +35,7 @@ public class SonarApiController {
         this.sonarApiService = sonarApiService;
     }
 
-    @GetMapping("/sonar/{component}/coverage")
+    @GetMapping("/components/{component}/coverage")
     public ResponseEntity<String> getCoverage(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -57,7 +57,7 @@ public class SonarApiController {
         }
     }
 
-    @GetMapping("/sonar/{component}/bug")
+    @GetMapping("/components/{component}/bug")
     public ResponseEntity<String> getBug(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -79,7 +79,7 @@ public class SonarApiController {
         }
     }
 
-    @GetMapping("/sonar/{component}/code_smell")
+    @GetMapping("/components/{component}/code_smell")
     public ResponseEntity<String> getCodeSmell(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -101,7 +101,7 @@ public class SonarApiController {
         }
     }
 
-    @GetMapping("/sonar/{component}/duplication")
+    @GetMapping("/components/{component}/duplication")
     public ResponseEntity<String> getDuplication(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pvs.app.member.post.MemberDTO;
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "members", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MemberController {
     static final Logger logger = LogManager.getLogger(MemberController.class.getName());
 
@@ -22,7 +22,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @PostMapping("/member")
+    @PostMapping("/")
     public ResponseEntity<String> createMember(@RequestBody MemberDTO memberDTO) {
         try {
             if (null != memberService.createUser(memberDTO)) {

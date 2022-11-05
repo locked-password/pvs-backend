@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/github-agent", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GithubApiController {
 
     static final Logger logger = LogManager.getLogger(GithubApiController.class.getName());
@@ -35,7 +35,7 @@ public class GithubApiController {
     }
 
     @SneakyThrows
-    @PostMapping("/github/commits/{repoOwner}/{repoName}")
+    @PostMapping("/repos/{repoOwner}/{repoName}/commits")
     public ResponseEntity<String> postCommits(@PathVariable("repoOwner") String repoOwner, @PathVariable("repoName") String repoName) {
         boolean callAPISuccess;
         Date lastUpdate;
@@ -66,7 +66,7 @@ public class GithubApiController {
         }
     }
 
-    @GetMapping("/github/commits/{repoOwner}/{repoName}")
+    @GetMapping("/repos/{repoOwner}/{repoName}/commits")
     public ResponseEntity<String> getCommits(@PathVariable("repoOwner") String repoOwner, @PathVariable("repoName") String repoName) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -87,7 +87,7 @@ public class GithubApiController {
         }
     }
 
-    @GetMapping("/github/issues/{repoOwner}/{repoName}")
+    @GetMapping("/repos/{repoOwner}/{repoName}/issues")
     public ResponseEntity<String> getIssues(@PathVariable("repoOwner") String repoOwner, @PathVariable("repoName") String repoName) {
         ObjectMapper objectMapper = new ObjectMapper();
 
