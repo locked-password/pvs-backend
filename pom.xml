@@ -94,6 +94,13 @@
             <version>2.0.1.Final</version>
         </dependency>
 
+        <!-- Integrate springfox Open API Docs -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <!-- Provided Scope -->
         <dependency>
             <groupId>org.projectlombok</groupId>
