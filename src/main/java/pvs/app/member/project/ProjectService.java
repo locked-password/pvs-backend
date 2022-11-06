@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Service;
 import pvs.app.api.github.GithubApiService;
 import pvs.app.member.project.hyperlink.Hyperlink;
-import pvs.app.member.project.hyperlink.HyperlinkDTO;
 import pvs.app.member.project.hyperlink.HyperlinkOfAddGithubURL;
 import pvs.app.member.project.hyperlink.HyperlinkOfAddSonarQubeURL;
 
@@ -28,7 +27,7 @@ public class ProjectService {
                 .setName(projectDTO.getProjectName())
                 .build();
 
-        Project savedProject = projectRepository.put(1L, p);
+        Project savedProject = projectRepository.put(null, p);
 
         if (!projectDTO.getGithubRepositoryURL().isBlank()) {
             HyperlinkOfAddGithubURL hyperlinkOfAddGithubURL = new HyperlinkOfAddGithubURL();
@@ -89,22 +88,8 @@ public class ProjectService {
         List<Project> projects = projectRepository.getAll();
         return projects.stream()
                 .filter(project -> project.getMemberId().equals(memberId))
-                .map(project -> {
-                    ProjectOfResponse projectDTO = new ProjectOfResponse();
-                    projectDTO.setProjectId(project.getProjectId());
-                    projectDTO.setProjectName(project.getName());
-                    projectDTO.setAvatarURL(project.getAvatarURL());
-                    projectDTO.setHyperlinkDTOList(
-                            project.getHyperlinkSet().stream()
-                                    .map(hyperlink -> {
-                                        HyperlinkDTO hyperlinkDTO = new HyperlinkDTO();
-                                        hyperlinkDTO.setUrl(hyperlink.getUrl());
-                                        hyperlinkDTO.setType(hyperlink.getType());
-                                        return hyperlinkDTO;
-                                    }).collect(Collectors.toList())
-                    );
-                    return projectDTO;
-                }).collect(Collectors.toList());
+                .map(ProjectOfResponse::of)
+                .collect(Collectors.toList());
     }
 
     public ProjectOfResponse getProjectsFromMemberById(Long projectId, Long memberId) {

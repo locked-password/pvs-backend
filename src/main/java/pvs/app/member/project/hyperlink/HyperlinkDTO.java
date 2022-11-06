@@ -54,4 +54,13 @@ public class HyperlinkDTO {
     public String toString() {
         return "RepositoryDTO(url=" + this.getUrl() + ", type=" + this.getType() + ")";
     }
+
+    static public HyperlinkDTO of(Hyperlink hyperlink) {
+        HyperlinkDTO dto = new HyperlinkDTO();
+
+        dto.setUrl(hyperlink.getUrl());
+        dto.setType(hyperlink.getType());
+
+        return dto;
+    }
 }
