@@ -5,23 +5,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService {
 
-    private final RoleDAO roleDAO;
+    private final RoleRepository roleRepository;
 
-    RoleService(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
+    RoleService(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 
     public RoleDTO save(RoleDTO roleDTO) {
         Role role = new Role();
         role.setName(roleDTO.getName());
 
-        Role savedRole = roleDAO.save(role);
-        RoleDTO savedRoleDTO = new RoleDTO();
-        savedRoleDTO.setName(savedRole.getName());
-        return savedRoleDTO;
+        Role savedRole = roleRepository.put(null, role);
+
+        return RoleDTO.of(savedRole);
     }
 
     public Role getByName(String name) {
-        return roleDAO.findByName(name);
+        return roleRepository.getByName(name);
     }
 }

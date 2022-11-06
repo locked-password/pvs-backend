@@ -9,12 +9,12 @@ public class MemberDTO {
     private String password;
 
     static public MemberDTO of(Member m) {
-        MemberDTO out = new MemberDTO();
+        MemberDTO dto = new MemberDTO();
 
-        out.setId(m.getMemberId());
-        out.setUsername(m.getUsername());
-        out.setPassword(m.getPassword());
+        dto.setId(m.getMemberId());
+        dto.setUsername(m.getUsername());
+        dto.setPassword(m.getPassword());
 
-        return out;
+        return dto;
     }
 }
