@@ -10,11 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.member.project.Project;
-import pvs.app.member.project.ProjectDataAccessor;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -28,7 +25,7 @@ public class MemberServiceTest {
     private MemberService sut;
 
     @MockBean
-    private MemberDAO mockMemberDAO;
+    private MemberRepository mockMemberRepository;
     private Member stubbingMember;
     private MemberDTO stubbingMemberDTO;
 
@@ -36,16 +33,12 @@ public class MemberServiceTest {
     private RoleService mockRoleService;
     private Role userRole;
 
-    @SpyBean
-    private ProjectDataAccessor spyOnProjectDataAccessor;
-    private Project stubbingProject;
 
     @Autowired
-    public MemberServiceTest(MemberService sut, MemberDAO mockMemberDAO, RoleService mockRoleService, ProjectDataAccessor spyOnProjectDataAccessor) {
+    public MemberServiceTest(MemberService sut, MemberRepository mockMemberRepository, RoleService mockRoleService) {
         this.sut = sut;
-        this.mockMemberDAO = mockMemberDAO;
+        this.mockMemberRepository = mockMemberRepository;
         this.mockRoleService = mockRoleService;
-        this.spyOnProjectDataAccessor = spyOnProjectDataAccessor;
     }
 
     @BeforeEach
@@ -70,21 +63,22 @@ public class MemberServiceTest {
     @Test
     public void get() {
         // Context:
-        when(mockMemberDAO.findById(1L)).thenReturn(stubbingMember);
+        when(mockMemberRepository.get(1L)).thenReturn(stubbingMember);
 
         // When:
         MemberDTO dto = sut.readUser(1L);
 
         // Then:
         Assertions.assertEquals(stubbingMemberDTO.toString(), dto.toString());
-        verify(mockMemberDAO, times(1)).findById(1L);
+        verify(mockMemberRepository, times(1)).get(1L);
     }
 
     @Test
     public void createUser() {
         // Context
         when(mockRoleService.getByName("USER")).thenReturn(userRole);
-        when(mockMemberDAO.save(any(Member.class))).thenReturn(stubbingMember);
+        when(mockMemberRepository.put(any(), isA(Member.class)))
+                .thenReturn(stubbingMember);
 
         // When
         MemberDTO dto = new MemberDTO();

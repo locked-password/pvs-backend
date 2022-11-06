@@ -1,11 +1,9 @@
 package pvs.app.common;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Indexed;
 
 import java.util.Optional;
 
-@Indexed
 public class PVSRepository<IdType, EntityType, DataAccessor extends CrudRepository<EntityType, IdType>> {
     protected final DataAccessor dataAccessor;
 

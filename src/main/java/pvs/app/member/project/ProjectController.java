@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pvs.app.member.project.hyperlink.HyperlinkOfAddGithubURL;
 import pvs.app.member.project.hyperlink.HyperlinkOfAddSonarQubeURL;
 import pvs.app.member.project.hyperlink.HyperlinkService;
 
@@ -47,21 +46,6 @@ public class ProjectController {
         } catch (IOException e) {
             e.printStackTrace();
             logger.debug(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionMessage);
-        }
-    }
-
-    @PostMapping("/projects/{projectId}/hyperlinks/github")
-    public ResponseEntity<String> addGithubRepository(@RequestBody HyperlinkOfAddGithubURL hyperlinkOfAddGithubURL) {
-        try {
-            if (HyperlinkService.checkGithubURL(hyperlinkOfAddGithubURL.getRepositoryURL())) {
-                if (projectService.addGithubRepo(hyperlinkOfAddGithubURL)) {
-                    return ResponseEntity.status(HttpStatus.OK).body(successMessage);
-                }
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(failMessage);
-            }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(urlInvalidMessage);
-        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionMessage);
         }
     }

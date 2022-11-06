@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
 import pvs.app.member.project.hyperlink.Hyperlink;
 import pvs.app.member.project.hyperlink.HyperlinkDTO;
-import pvs.app.member.project.hyperlink.HyperlinkOfAddGithubURL;
+import pvs.app.member.project.hyperlink.HyperlinkOfAddSonarQubeURL;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,21 +35,20 @@ public class ProjectServiceTest {
     private ProjectService sut;
 
     @SpyBean
-    private ProjectDataAccessor spyOnProjectDataAccessor;
+    private ProjectRepository spyOnProjectRepository;
     private ProjectOfCreation stubbingProjectOfCreation;
     private Project stubbingProject;
 
     @Autowired
-    public ProjectServiceTest(ProjectService sut, ProjectDataAccessor spyOnProjectDataAccessor) {
+    public ProjectServiceTest(ProjectService sut, ProjectRepository spyOnProjectRepository) {
         this.sut = sut;
-        this.spyOnProjectDataAccessor = spyOnProjectDataAccessor;
+        this.spyOnProjectRepository = spyOnProjectRepository;
     }
 
     @BeforeEach
     public void setup() throws IOException {
         stubbingProjectOfCreation = new ProjectOfCreation();
         stubbingProjectOfCreation.setProjectName("react");
-        stubbingProjectOfCreation.setGithubRepositoryURL("https://github.com/facebook/react");
         stubbingProjectOfCreation.setSonarRepositoryURL("http://140.124.181.143:9000/dashboard?id=pvs-springboot");
 
         stubbingProject = new Project();
@@ -58,16 +57,11 @@ public class ProjectServiceTest {
         stubbingProject.setMemberId(1L);
         stubbingProject.setAvatarURL("https://avatars3.githubusercontent.com/u/17744001?u=038d9e068c4205d94c670d7d89fb921ec5b29782&v=4");
         Set<Hyperlink> stubbingRepositories = new HashSet<>();
-        Hyperlink stubbingHyperlink1 = new Hyperlink();
-        stubbingHyperlink1.setHyperlinkId(1L);
-        stubbingHyperlink1.setType("github");
-        stubbingHyperlink1.setUrl(stubbingProjectOfCreation.getGithubRepositoryURL());
-        stubbingRepositories.add(stubbingHyperlink1);
-        Hyperlink stubbingHyperlink2 = new Hyperlink();
-        stubbingHyperlink2.setHyperlinkId(2L);
-        stubbingHyperlink2.setType("sonar");
-        stubbingHyperlink2.setUrl(stubbingProjectOfCreation.getSonarRepositoryURL());
-        stubbingRepositories.add(stubbingHyperlink2);
+        Hyperlink stubbingHyperlink = new Hyperlink();
+        stubbingHyperlink.setHyperlinkId(1L);
+        stubbingHyperlink.setType("sonar");
+        stubbingHyperlink.setUrl(stubbingProjectOfCreation.getSonarRepositoryURL());
+        stubbingRepositories.add(stubbingHyperlink);
         stubbingProject.setHyperlinkSet(stubbingRepositories);
 
         MockitoAnnotations.openMocks(this);
@@ -79,13 +73,13 @@ public class ProjectServiceTest {
         ProjectService spyOnSUT = spy(sut);
         doReturn(true)
                 .when(spyOnSUT)
-                .addGithubRepo(isA(HyperlinkOfAddGithubURL.class));
+                .addSonarRepo(isA(HyperlinkOfAddSonarQubeURL.class));
 
         // When:
         spyOnSUT.create(stubbingProjectOfCreation);
 
         // Then:
-        verify(spyOnProjectDataAccessor, atLeast(1)).save(isA(Project.class));
+        verify(spyOnProjectRepository, atLeast(1)).put(any(), isA(Project.class));
     }
 
     @Test
@@ -95,7 +89,7 @@ public class ProjectServiceTest {
         stubbingProjects.add(stubbingProject);
         stubbingProjects.add(stubbingProject);
         stubbingProjects.add(stubbingProject);
-        doReturn(stubbingProjects).when(spyOnProjectDataAccessor).findByMemberId(isA(Long.class));
+        doReturn(stubbingProjects).when(spyOnProjectRepository).getAll();
 
         // When:
         List<ProjectOfResponse> actualMemberProjects = sut.getProjectsByMember(1L);
@@ -107,7 +101,7 @@ public class ProjectServiceTest {
                 getStubbingResponseProjectDTO()
         );
         Assertions.assertEquals(expectedMemberProjects.size(), actualMemberProjects.size());
-        verify(spyOnProjectDataAccessor, atLeast(1)).findByMemberId(isA(Long.class));
+        verify(spyOnProjectRepository, atLeast(1)).getAll();
     }
 
     @NotNull

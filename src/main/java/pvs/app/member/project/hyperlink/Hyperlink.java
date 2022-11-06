@@ -1,6 +1,6 @@
 package pvs.app.member.project.hyperlink;
 
-import pvs.app.api.github.commit.GithubCommit;
+import pvs.app.api.git.commit.GitCommit;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class Hyperlink {
     private String type;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hyperlink")
-    private Set<GithubCommit> githubCommitSet;
+    private Set<GitCommit> gitCommits;
 
     public Hyperlink() {
     }
@@ -50,12 +50,12 @@ public class Hyperlink {
         this.type = type;
     }
 
-    public Set<GithubCommit> getGithubCommitSet() {
-        return this.githubCommitSet;
+    public Set<GitCommit> getGitCommits() {
+        return this.gitCommits;
     }
 
-    public void setGithubCommitSet(Set<GithubCommit> githubCommitSet) {
-        this.githubCommitSet = githubCommitSet;
+    public void setGitCommits(Set<GitCommit> gitCommitSet) {
+        this.gitCommits = gitCommitSet;
     }
 
     public boolean equals(final Object o) {
@@ -73,8 +73,8 @@ public class Hyperlink {
         final Object this$type = this.getType();
         final Object other$type = other.getType();
         if (!Objects.equals(this$type, other$type)) return false;
-        final Object this$githubCommitSet = this.getGithubCommitSet();
-        final Object other$githubCommitSet = other.getGithubCommitSet();
+        final Object this$githubCommitSet = this.getGitCommits();
+        final Object other$githubCommitSet = other.getGitCommits();
         return Objects.equals(this$githubCommitSet, other$githubCommitSet);
     }
 
@@ -91,13 +91,13 @@ public class Hyperlink {
         result = result * PRIME + ($url == null ? 43 : $url.hashCode());
         final Object $type = this.getType();
         result = result * PRIME + ($type == null ? 43 : $type.hashCode());
-        final Object $githubCommitSet = this.getGithubCommitSet();
+        final Object $githubCommitSet = this.getGitCommits();
         result = result * PRIME + ($githubCommitSet == null ? 43 : $githubCommitSet.hashCode());
         return result;
     }
 
     public String toString() {
-        return "Hyperlink(hyperlinkId=" + this.getHyperlinkId() + ", url=" + this.getUrl() + ", type=" + this.getType() + ", githubCommitSet=" + this.getGithubCommitSet() + ")";
+        return "Hyperlink(hyperlinkId=" + this.getHyperlinkId() + ", url=" + this.getUrl() + ", type=" + this.getType() + ", githubCommitSet=" + this.getGitCommits() + ")";
     }
 
     static public HyperlinkBuilder builder() {

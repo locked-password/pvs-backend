@@ -1,4 +1,4 @@
-package pvs.app.api.github.commit;
+package pvs.app.api.git.commit;
 
 import lombok.Data;
 import pvs.app.member.project.hyperlink.Hyperlink;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Data
-public class GithubCommit {
+public class GitCommit {
 
     @Id
     @NotNull
@@ -49,7 +49,7 @@ public class GithubCommit {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GithubCommit that = (GithubCommit) o;
+        GitCommit that = (GitCommit) o;
         return additions == that.additions &&
                 deletions == that.deletions &&
                 changeFiles == that.changeFiles &&

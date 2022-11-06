@@ -26,15 +26,6 @@ public class HyperlinkController {
         this.hyperlinkService = hyperlinkService;
     }
 
-    @GetMapping("/hyperlinks/github")
-    public ResponseEntity<String> checkGithubURL(@RequestParam("url") String url) {
-        if (hyperlinkService.checkGithubURL(url)) {
-            return ResponseEntity.status(HttpStatus.OK).body(successMessage);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(urlInvalidMessage);
-        }
-    }
-
     @GetMapping("/hyperlinks/sonarqube")
     public ResponseEntity<String> checkSonarURL(@RequestParam("url") String url) {
         if (hyperlinkService.checkSonarURL(url)) {

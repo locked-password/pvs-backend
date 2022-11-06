@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
-import pvs.app.member.project.hyperlink.HyperlinkService;
 
 @SpringBootTest(classes = Application.class)
 @ExtendWith(SpringExtension.class)
@@ -44,12 +43,6 @@ public class HyperlinkServiceTest {
     @Test
     public void checkSonarURL_GivenInvalidURL_ThenReturnFalse() {
         boolean exist = sut.checkSonarURL("pvs-springboot");
-        Assertions.assertFalse(exist);
-    }
-
-    @Test
-    public void checkGithubURL_GivenInvalidURL_ThenReturnFalse() {
-        boolean exist = sut.checkGithubURL("pvs-springboot");
         Assertions.assertFalse(exist);
     }
 }

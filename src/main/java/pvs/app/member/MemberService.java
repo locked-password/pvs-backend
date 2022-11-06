@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Service
 public class MemberService {
-
     private final MemberRepository memberRepository;
     private final RoleService roleService;
 
@@ -34,6 +33,7 @@ public class MemberService {
         member.setAuthorities(roleSet);
 
         Member savedMember = memberRepository.put(null, member);
+        savedMember.setMemberId(1L);
 
         return MemberDTO.of(savedMember);
     }
@@ -42,6 +42,4 @@ public class MemberService {
         Member member = memberRepository.get(id);
         return MemberDTO.of(member);
     }
-
-
 }

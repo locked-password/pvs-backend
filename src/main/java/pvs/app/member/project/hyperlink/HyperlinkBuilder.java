@@ -1,6 +1,6 @@
 package pvs.app.member.project.hyperlink;
 
-import pvs.app.api.github.commit.GithubCommit;
+import pvs.app.api.git.commit.GitCommit;
 
 import java.util.Set;
 
@@ -22,8 +22,8 @@ public class HyperlinkBuilder {
         return this;
     }
 
-    public HyperlinkBuilder setGithubCommits(Set<GithubCommit> commits) {
-        hl.setGithubCommitSet(commits);
+    public HyperlinkBuilder setGitCommits(Set<GitCommit> commits) {
+        hl.setGitCommits(commits);
         return this;
     }
 
