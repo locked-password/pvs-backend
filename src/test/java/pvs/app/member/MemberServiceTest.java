@@ -5,11 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
+import pvs.app.member.project.Project;
+import pvs.app.member.project.ProjectDAO;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -19,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @Tag("Unit")
 public class MemberServiceTest {
-    @Autowired
+    @InjectMocks
     private MemberService sut;
 
     @MockBean
@@ -31,24 +36,35 @@ public class MemberServiceTest {
     private RoleService mockRoleService;
     private Role userRole;
 
-    public MemberServiceTest() {
-        stubbingMember = new Member();
-        stubbingMemberDTO = new MemberDTO();
-        userRole = new Role();
+    @SpyBean
+    private ProjectDAO spyOnProjectDAO;
+    private Project stubbingProject;
+
+    @Autowired
+    public MemberServiceTest(MemberService sut, MemberDAO mockMemberDAO, RoleService mockRoleService, ProjectDAO spyOnProjectDAO) {
+        this.sut = sut;
+        this.mockMemberDAO = mockMemberDAO;
+        this.mockRoleService = mockRoleService;
+        this.spyOnProjectDAO = spyOnProjectDAO;
     }
 
     @BeforeEach
     public void setup() {
+        stubbingMember = new Member();
         stubbingMember.setMemberId(1L);
         stubbingMember.setUsername("user");
         stubbingMember.setPassword("1234");
 
+        stubbingMemberDTO = new MemberDTO();
         stubbingMemberDTO.setId(stubbingMember.getMemberId());
         stubbingMemberDTO.setUsername(stubbingMember.getUsername());
         stubbingMemberDTO.setPassword(stubbingMember.getPassword());
 
+        userRole = new Role();
         userRole.setRoleId(1L);
         userRole.setName("USER");
+
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

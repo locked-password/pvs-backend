@@ -70,4 +70,8 @@ public class Project {
     public void setHyperlinkSet(Set<Hyperlink> hyperlinkSet) {
         this.hyperlinkSet = hyperlinkSet;
     }
+
+    public static ProjectBuilder builder() {
+        return new ProjectBuilder();
+    }
 }

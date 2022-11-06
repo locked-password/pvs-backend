@@ -2,6 +2,7 @@ package pvs.app.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import pvs.app.member.project.ProjectDAO;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -13,10 +14,12 @@ public class MemberService {
 
     private final MemberDAO memberDAO;
     private final RoleService roleService;
+    private ProjectDAO projectDAO;
 
-    MemberService(MemberDAO memberDAO, RoleService roleService) {
+    public MemberService(MemberDAO memberDAO, RoleService roleService, ProjectDAO projectDAO) {
         this.memberDAO = memberDAO;
         this.roleService = roleService;
+        this.projectDAO = projectDAO;
     }
 
     public MemberDTO createUser(MemberDTO memberDTO) {
@@ -48,4 +51,6 @@ public class MemberService {
         memberDTO.setPassword(member.getPassword());
         return memberDTO;
     }
+
+
 }

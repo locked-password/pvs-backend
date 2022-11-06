@@ -2,6 +2,7 @@ package pvs.app.member;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Tag("Integration")
 public class MemberDAOIntegrationTest {
     @Autowired
     private MemberDAO memberDAO;
@@ -26,6 +28,11 @@ public class MemberDAOIntegrationTest {
         member01.setUsername("aaaa");
         member01.setPassword("1234");
         member01 = memberDAO.save(member01);
+
+        Member member02 = new Member();
+        member02.setUsername("bbb");
+        member02.setPassword("1234");
+        memberDAO.save(member02);
     }
 
     @Test

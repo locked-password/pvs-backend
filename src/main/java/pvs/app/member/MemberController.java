@@ -43,20 +43,22 @@ public class MemberController {
 
     @GetMapping("/members/{memberId}/projects")
     public ResponseEntity<List<ProjectOfResponse>> readMemberAllProjects(@PathVariable Long memberId) {
-        List<ProjectOfResponse> projectList = projectService.getMemberProjects(memberId);
+        List<ProjectOfResponse> projectList = projectService.getProjectsByMember(memberId);
         return ResponseEntity.status(HttpStatus.OK).body(projectList);
     }
 
     @GetMapping("/members/{memberId}/projects/{projectId}")
-    public ResponseEntity<ProjectOfResponse> readSelectedProject
-            (@PathVariable Long memberId, @PathVariable Long projectId) {
-        List<ProjectOfResponse> projectList = projectService.getMemberProjects(memberId);
-        Optional<ProjectOfResponse> selectedProject =
-                projectList.stream()
-                        .filter(project -> project.getProjectId().equals(projectId))
-                        .findFirst();
+    public ResponseEntity<ProjectOfResponse> readSelectedProject(
+            @PathVariable Long memberId, @PathVariable Long projectId) {
 
-        return selectedProject.map(projectOfResponse -> ResponseEntity.status(HttpStatus.OK).body(projectOfResponse))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null));
+        Optional<ProjectOfResponse> selectedProject = projectService.getProjectsFromMemberById(projectId, memberId);
+
+        return selectedProject
+                .map(projectOfResponse -> ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(projectOfResponse))
+                .orElseGet(() -> ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
+                        .body(null));
     }
 }

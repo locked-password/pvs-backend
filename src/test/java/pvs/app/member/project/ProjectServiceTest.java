@@ -31,15 +31,19 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @Tag("Unit")
 public class ProjectServiceTest {
-    @Autowired
     @InjectMocks
     private ProjectService sut;
 
     @SpyBean
-    @Autowired
     private ProjectDAO spyOnProjectDAO;
     private ProjectOfCreation stubbingProjectOfCreation;
     private Project stubbingProject;
+
+    @Autowired
+    public ProjectServiceTest(ProjectService sut, ProjectDAO spyOnProjectDAO) {
+        this.sut = sut;
+        this.spyOnProjectDAO = spyOnProjectDAO;
+    }
 
     @BeforeEach
     public void setup() throws IOException {
@@ -85,7 +89,7 @@ public class ProjectServiceTest {
     }
 
     @Test
-    public void getMemberProjects() {
+    public void getProjectsByMember() {
         // Given:
         List<Project> stubbingProjects = new ArrayList<>();
         stubbingProjects.add(stubbingProject);
@@ -94,7 +98,7 @@ public class ProjectServiceTest {
         doReturn(stubbingProjects).when(spyOnProjectDAO).findByMemberId(isA(Long.class));
 
         // When:
-        List<ProjectOfResponse> actualMemberProjects = sut.getMemberProjects(1L);
+        List<ProjectOfResponse> actualMemberProjects = sut.getProjectsByMember(1L);
 
         // Then:
         List<ProjectOfResponse> expectedMemberProjects = List.of(
@@ -122,4 +126,5 @@ public class ProjectServiceTest {
                 .collect(Collectors.toList()));
         return dto;
     }
+
 }
