@@ -70,12 +70,13 @@ public class ProjectService {
 
     public boolean addSonarRepo(HyperlinkOfAddSonarQubeURL hyperlinkOfAddSonarQubeURL) {
         if (projectRepository.contains(hyperlinkOfAddSonarQubeURL.getProjectId())) {
-            Hyperlink hyperlink = new Hyperlink();
-            hyperlink.setUrl(hyperlinkOfAddSonarQubeURL.getRepositoryURL());
-            hyperlink.setType("sonar");
-
             Project project = projectRepository.get(hyperlinkOfAddSonarQubeURL.getProjectId());
-            project.getHyperlinkSet().add(hyperlink);
+
+            project.getHyperlinkSet().add(
+                    Hyperlink.builder()
+                            .setUrl(hyperlinkOfAddSonarQubeURL.getRepositoryURL())
+                            .setType("sonar")
+                            .build());
 
             projectRepository.put(hyperlinkOfAddSonarQubeURL.getProjectId(), project);
             return true;

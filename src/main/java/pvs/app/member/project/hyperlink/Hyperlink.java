@@ -99,4 +99,8 @@ public class Hyperlink {
     public String toString() {
         return "Hyperlink(hyperlinkId=" + this.getHyperlinkId() + ", url=" + this.getUrl() + ", type=" + this.getType() + ", githubCommitSet=" + this.getGithubCommitSet() + ")";
     }
+
+    static public HyperlinkBuilder builder() {
+        return new HyperlinkBuilder();
+    }
 }
