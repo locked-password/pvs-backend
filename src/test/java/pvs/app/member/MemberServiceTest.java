@@ -73,7 +73,7 @@ public class MemberServiceTest {
         when(mockMemberDAO.findById(1L)).thenReturn(stubbingMember);
 
         // When:
-        MemberDTO dto = sut.get(1L);
+        MemberDTO dto = sut.readUser(1L);
 
         // Then:
         Assertions.assertEquals(stubbingMemberDTO.toString(), dto.toString());

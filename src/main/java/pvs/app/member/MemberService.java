@@ -2,7 +2,6 @@ package pvs.app.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import pvs.app.member.project.ProjectDataAccessor;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -12,14 +11,13 @@ import java.util.Set;
 @Service
 public class MemberService {
 
-    private final MemberDAO memberDAO;
+    private final MemberRepository memberRepository;
     private final RoleService roleService;
-    private ProjectDataAccessor projectDataAccessor;
 
-    public MemberService(MemberDAO memberDAO, RoleService roleService, ProjectDataAccessor projectDataAccessor) {
-        this.memberDAO = memberDAO;
+    public MemberService(
+            MemberRepository memberRepository, RoleService roleService) {
+        this.memberRepository = memberRepository;
         this.roleService = roleService;
-        this.projectDataAccessor = projectDataAccessor;
     }
 
     public MemberDTO createUser(MemberDTO memberDTO) {
@@ -32,24 +30,17 @@ public class MemberService {
 
         Set<Role> roleSet = new HashSet<>();
         Role userRole = roleService.getByName("USER");
-        if (userRole != null) {
-            roleSet.add(userRole);
-            member.setAuthorities(roleSet);
-        }
+        if (userRole != null) roleSet.add(userRole);
+        member.setAuthorities(roleSet);
 
-        Member savedMember = memberDAO.save(member);
+        Member savedMember = memberRepository.put(null, member);
 
-        memberDTO.setId(savedMember.getMemberId());
-        return memberDTO;
+        return MemberDTO.of(savedMember);
     }
 
-    public MemberDTO get(long id) {
-        Member member = memberDAO.findById(id);
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(member.getMemberId());
-        memberDTO.setUsername(member.getUsername());
-        memberDTO.setPassword(member.getPassword());
-        return memberDTO;
+    public MemberDTO readUser(long id) {
+        Member member = memberRepository.get(id);
+        return MemberDTO.of(member);
     }
 
 
