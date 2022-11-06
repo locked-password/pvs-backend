@@ -11,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
-import pvs.app.member.project.Project;
-import pvs.app.member.project.ProjectDAO;
 import pvs.app.member.project.hyperlink.Hyperlink;
 
 import java.util.HashSet;
@@ -23,11 +21,11 @@ import java.util.Set;
 @ExtendWith(SpringExtension.class)
 @Tag("Integration")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ProjectDAOIntegrationTest {
+public class ProjectDataAccessorIntegrationTest {
     Set<Project> projects;
     Set<Hyperlink> repositories;
     @Autowired
-    private ProjectDAO projectDAO;
+    private ProjectDataAccessor projectDataAccessor;
 
     @BeforeEach
     public void setup() {
@@ -54,13 +52,13 @@ public class ProjectDAOIntegrationTest {
 
         project01.getHyperlinkSet().add(hyperlink01);
         project01.getHyperlinkSet().add(hyperlink02);
-        projectDAO.save(project01);
-        projectDAO.save(project02);
+        projectDataAccessor.save(project01);
+        projectDataAccessor.save(project02);
     }
 
     @Test
     public void whenFindAll_thenReturnProjectList() {
-        List<Project> foundEntityList = projectDAO.findAll();
+        List<Project> foundEntityList = projectDataAccessor.findAll();
         Assertions.assertEquals(2, foundEntityList.size());
         Assertions.assertEquals(2, foundEntityList.get(0).getHyperlinkSet().size());
     }

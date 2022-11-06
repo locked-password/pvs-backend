@@ -14,7 +14,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
 import pvs.app.member.project.Project;
-import pvs.app.member.project.ProjectDAO;
+import pvs.app.member.project.ProjectDataAccessor;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -37,15 +37,15 @@ public class MemberServiceTest {
     private Role userRole;
 
     @SpyBean
-    private ProjectDAO spyOnProjectDAO;
+    private ProjectDataAccessor spyOnProjectDataAccessor;
     private Project stubbingProject;
 
     @Autowired
-    public MemberServiceTest(MemberService sut, MemberDAO mockMemberDAO, RoleService mockRoleService, ProjectDAO spyOnProjectDAO) {
+    public MemberServiceTest(MemberService sut, MemberDAO mockMemberDAO, RoleService mockRoleService, ProjectDataAccessor spyOnProjectDataAccessor) {
         this.sut = sut;
         this.mockMemberDAO = mockMemberDAO;
         this.mockRoleService = mockRoleService;
-        this.spyOnProjectDAO = spyOnProjectDAO;
+        this.spyOnProjectDataAccessor = spyOnProjectDataAccessor;
     }
 
     @BeforeEach

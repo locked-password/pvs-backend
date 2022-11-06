@@ -1,7 +1,5 @@
 package pvs.app.member;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,12 +9,10 @@ import pvs.app.member.project.ProjectOfResponse;
 import pvs.app.member.project.ProjectService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MemberController {
-    static final Logger logger = LogManager.getLogger(MemberController.class.getName());
 
     private final MemberService memberService;
 
@@ -50,15 +46,10 @@ public class MemberController {
     @GetMapping("/members/{memberId}/projects/{projectId}")
     public ResponseEntity<ProjectOfResponse> readSelectedProject(
             @PathVariable Long memberId, @PathVariable Long projectId) {
-
-        Optional<ProjectOfResponse> selectedProject = projectService.getProjectsFromMemberById(projectId, memberId);
-
-        return selectedProject
-                .map(projectOfResponse -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(projectOfResponse))
-                .orElseGet(() -> ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(null));
+        ProjectOfResponse selectedProject = projectService.getProjectsFromMemberById(projectId, memberId);
+        if (selectedProject != null)
+            return ResponseEntity.status(HttpStatus.OK).body(selectedProject);
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 }

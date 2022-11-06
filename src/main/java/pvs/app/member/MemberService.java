@@ -2,7 +2,7 @@ package pvs.app.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import pvs.app.member.project.ProjectDAO;
+import pvs.app.member.project.ProjectDataAccessor;
 import pvs.app.member.role.Role;
 import pvs.app.member.role.RoleService;
 
@@ -14,12 +14,12 @@ public class MemberService {
 
     private final MemberDAO memberDAO;
     private final RoleService roleService;
-    private ProjectDAO projectDAO;
+    private ProjectDataAccessor projectDataAccessor;
 
-    public MemberService(MemberDAO memberDAO, RoleService roleService, ProjectDAO projectDAO) {
+    public MemberService(MemberDAO memberDAO, RoleService roleService, ProjectDataAccessor projectDataAccessor) {
         this.memberDAO = memberDAO;
         this.roleService = roleService;
-        this.projectDAO = projectDAO;
+        this.projectDataAccessor = projectDataAccessor;
     }
 
     public MemberDTO createUser(MemberDTO memberDTO) {

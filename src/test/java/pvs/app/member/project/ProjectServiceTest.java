@@ -35,14 +35,14 @@ public class ProjectServiceTest {
     private ProjectService sut;
 
     @SpyBean
-    private ProjectDAO spyOnProjectDAO;
+    private ProjectDataAccessor spyOnProjectDataAccessor;
     private ProjectOfCreation stubbingProjectOfCreation;
     private Project stubbingProject;
 
     @Autowired
-    public ProjectServiceTest(ProjectService sut, ProjectDAO spyOnProjectDAO) {
+    public ProjectServiceTest(ProjectService sut, ProjectDataAccessor spyOnProjectDataAccessor) {
         this.sut = sut;
-        this.spyOnProjectDAO = spyOnProjectDAO;
+        this.spyOnProjectDataAccessor = spyOnProjectDataAccessor;
     }
 
     @BeforeEach
@@ -85,7 +85,7 @@ public class ProjectServiceTest {
         spyOnSUT.create(stubbingProjectOfCreation);
 
         // Then:
-        verify(spyOnProjectDAO, atLeast(1)).save(isA(Project.class));
+        verify(spyOnProjectDataAccessor, atLeast(1)).save(isA(Project.class));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ProjectServiceTest {
         stubbingProjects.add(stubbingProject);
         stubbingProjects.add(stubbingProject);
         stubbingProjects.add(stubbingProject);
-        doReturn(stubbingProjects).when(spyOnProjectDAO).findByMemberId(isA(Long.class));
+        doReturn(stubbingProjects).when(spyOnProjectDataAccessor).findByMemberId(isA(Long.class));
 
         // When:
         List<ProjectOfResponse> actualMemberProjects = sut.getProjectsByMember(1L);
@@ -107,7 +107,7 @@ public class ProjectServiceTest {
                 getStubbingResponseProjectDTO()
         );
         Assertions.assertEquals(expectedMemberProjects.size(), actualMemberProjects.size());
-        verify(spyOnProjectDAO, atLeast(1)).findByMemberId(isA(Long.class));
+        verify(spyOnProjectDataAccessor, atLeast(1)).findByMemberId(isA(Long.class));
     }
 
     @NotNull

@@ -9,27 +9,26 @@ import pvs.app.member.project.hyperlink.HyperlinkOfAddGithubURL;
 import pvs.app.member.project.hyperlink.HyperlinkOfAddSonarQubeURL;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
-    private final ProjectDAO projectDAO;
+
+    private final ProjectRepository projectRepository;
     private final GithubApiService githubApiService;
 
-    public ProjectService(ProjectDAO projectDAO, GithubApiService githubApiService) {
-        this.projectDAO = projectDAO;
+    public ProjectService(ProjectRepository projectRepository, GithubApiService githubApiService) {
+        this.projectRepository = projectRepository;
         this.githubApiService = githubApiService;
     }
 
     public void create(ProjectOfCreation projectDTO) throws IOException {
         Project p = Project.builder()
-                .setMemberId(1L)
                 .setName(projectDTO.getProjectName())
                 .build();
 
-        Project savedProject = projectDAO.save(p);
+        Project savedProject = projectRepository.put(1L, p);
 
         if (!projectDTO.getGithubRepositoryURL().isBlank()) {
             HyperlinkOfAddGithubURL hyperlinkOfAddGithubURL = new HyperlinkOfAddGithubURL();
@@ -49,21 +48,21 @@ public class ProjectService {
     }
 
     public boolean addGithubRepo(HyperlinkOfAddGithubURL hyperlinkOfAddGithubURL) throws IOException {
-        Optional<Project> projectOptional = projectDAO.findById(hyperlinkOfAddGithubURL.getProjectId());
-        if (projectOptional.isPresent()) {
-            Project project = projectOptional.get();
-            String url = hyperlinkOfAddGithubURL.getRepositoryURL();
+        if (projectRepository.contains(hyperlinkOfAddGithubURL.getProjectId())) {
             Hyperlink hyperlink = new Hyperlink();
-            hyperlink.setUrl(url);
+            hyperlink.setUrl(hyperlinkOfAddGithubURL.getRepositoryURL());
             hyperlink.setType("github");
+
+            Project project = projectRepository.get(hyperlinkOfAddGithubURL.getProjectId());
             project.getHyperlinkSet().add(hyperlink);
-            String owner = url.split("/")[3];
+
+            String owner = hyperlinkOfAddGithubURL.getRepositoryURL().split("/")[3];
             JsonNode responseJson = githubApiService.getAvatarURL(owner);
             if (!responseJson.isNull()) {
                 String json = responseJson.textValue();
                 project.setAvatarURL(json);
             }
-            projectDAO.save(project);
+            projectRepository.put(hyperlinkOfAddGithubURL.getProjectId(), project);
             return true;
         } else {
             return false;
@@ -71,14 +70,15 @@ public class ProjectService {
     }
 
     public boolean addSonarRepo(HyperlinkOfAddSonarQubeURL hyperlinkOfAddSonarQubeURL) {
-        Optional<Project> projectOptional = projectDAO.findById(hyperlinkOfAddSonarQubeURL.getProjectId());
-        if (projectOptional.isPresent()) {
-            Project project = projectOptional.get();
+        if (projectRepository.contains(hyperlinkOfAddSonarQubeURL.getProjectId())) {
             Hyperlink hyperlink = new Hyperlink();
             hyperlink.setUrl(hyperlinkOfAddSonarQubeURL.getRepositoryURL());
             hyperlink.setType("sonar");
+
+            Project project = projectRepository.get(hyperlinkOfAddSonarQubeURL.getProjectId());
             project.getHyperlinkSet().add(hyperlink);
-            projectDAO.save(project);
+
+            projectRepository.put(hyperlinkOfAddSonarQubeURL.getProjectId(), project);
             return true;
         } else {
             return false;
@@ -86,29 +86,32 @@ public class ProjectService {
     }
 
     public List<ProjectOfResponse> getProjectsByMember(Long memberId) {
-        List<Project> projectList = projectDAO.findByMemberId(memberId);
-        List<ProjectOfResponse> projectDTOList = new ArrayList<>();
-
-        for (Project project : projectList) {
-            ProjectOfResponse projectDTO = new ProjectOfResponse();
-            projectDTO.setProjectId(project.getProjectId());
-            projectDTO.setProjectName(project.getName());
-            projectDTO.setAvatarURL(project.getAvatarURL());
-            for (Hyperlink hyperlink : project.getHyperlinkSet()) {
-                HyperlinkDTO HyperlinkDTO = new HyperlinkDTO();
-                HyperlinkDTO.setUrl(hyperlink.getUrl());
-                HyperlinkDTO.setType(hyperlink.getType());
-                projectDTO.getHyperlinkDTOList().add(HyperlinkDTO);
-            }
-            projectDTOList.add(projectDTO);
-        }
-        return projectDTOList;
+        List<Project> projects = projectRepository.getAll();
+        return projects.stream()
+                .filter(project -> project.getMemberId().equals(memberId))
+                .map(project -> {
+                    ProjectOfResponse projectDTO = new ProjectOfResponse();
+                    projectDTO.setProjectId(project.getProjectId());
+                    projectDTO.setProjectName(project.getName());
+                    projectDTO.setAvatarURL(project.getAvatarURL());
+                    projectDTO.setHyperlinkDTOList(
+                            project.getHyperlinkSet().stream()
+                                    .map(hyperlink -> {
+                                        HyperlinkDTO hyperlinkDTO = new HyperlinkDTO();
+                                        hyperlinkDTO.setUrl(hyperlink.getUrl());
+                                        hyperlinkDTO.setType(hyperlink.getType());
+                                        return hyperlinkDTO;
+                                    }).collect(Collectors.toList())
+                    );
+                    return projectDTO;
+                }).collect(Collectors.toList());
     }
 
-    public Optional<ProjectOfResponse> getProjectsFromMemberById(Long projectId, Long memberId) {
-        List<ProjectOfResponse> projectList = getProjectsByMember(memberId);
-        return projectList.stream()
+    public ProjectOfResponse getProjectsFromMemberById(Long projectId, Long memberId) {
+        List<ProjectOfResponse> projectsOfResponse = getProjectsByMember(memberId);
+        return projectsOfResponse.stream()
                 .filter(project -> project.getProjectId().equals(projectId))
-                .findFirst();
+                .findFirst()
+                .orElse(null);
     }
 }
