@@ -15,6 +15,20 @@ public class ProjectOfResponse {
     String avatarURL;
     List<HyperlinkDTO> HyperlinkDTOList = new ArrayList<>();
 
+    static public ProjectOfResponse of(Project project) {
+        ProjectOfResponse dto = new ProjectOfResponse();
+
+        dto.setProjectId(project.getProjectId());
+        dto.setProjectName(project.getName());
+        dto.setAvatarURL(project.getAvatarURL());
+        dto.setHyperlinkDTOList(project.getHyperlinkSet()
+                .stream()
+                .map(HyperlinkDTO::of)
+                .collect(Collectors.toList()));
+
+        return dto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,19 +43,5 @@ public class ProjectOfResponse {
     @Override
     public int hashCode() {
         return Objects.hash(projectId, projectName, avatarURL, HyperlinkDTOList);
-    }
-
-    static public ProjectOfResponse of(Project project) {
-        ProjectOfResponse dto = new ProjectOfResponse();
-
-        dto.setProjectId(project.getProjectId());
-        dto.setProjectName(project.getName());
-        dto.setAvatarURL(project.getAvatarURL());
-        dto.setHyperlinkDTOList(project.getHyperlinkSet()
-                .stream()
-                .map(HyperlinkDTO::of)
-                .collect(Collectors.toList()));
-
-        return dto;
     }
 }

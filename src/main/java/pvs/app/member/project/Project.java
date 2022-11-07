@@ -31,6 +31,10 @@ public class Project {
     )
     private Set<Hyperlink> hyperlinkSet = new HashSet<>();
 
+    public static ProjectBuilder builder() {
+        return new ProjectBuilder();
+    }
+
     public Long getProjectId() {
         return projectId;
     }
@@ -69,9 +73,5 @@ public class Project {
 
     public void setHyperlinkSet(Set<Hyperlink> hyperlinkSet) {
         this.hyperlinkSet = hyperlinkSet;
-    }
-
-    public static ProjectBuilder builder() {
-        return new ProjectBuilder();
     }
 }

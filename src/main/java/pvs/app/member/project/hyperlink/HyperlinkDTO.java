@@ -9,6 +9,15 @@ public class HyperlinkDTO {
     public HyperlinkDTO() {
     }
 
+    static public HyperlinkDTO of(Hyperlink hyperlink) {
+        HyperlinkDTO dto = new HyperlinkDTO();
+
+        dto.setUrl(hyperlink.getUrl());
+        dto.setType(hyperlink.getType());
+
+        return dto;
+    }
+
     public String getUrl() {
         return this.url;
     }
@@ -27,7 +36,7 @@ public class HyperlinkDTO {
 
     public boolean equals(final Object o) {
         if (o == this) return true;
-        if (!(o instanceof final HyperlinkDTO other)) return false;
+        if (!(o instanceof HyperlinkDTO other)) return false;
         if (!other.canEqual(this)) return false;
         final Object this$url = this.getUrl();
         final Object other$url = other.getUrl();
@@ -53,14 +62,5 @@ public class HyperlinkDTO {
 
     public String toString() {
         return "RepositoryDTO(url=" + this.getUrl() + ", type=" + this.getType() + ")";
-    }
-
-    static public HyperlinkDTO of(Hyperlink hyperlink) {
-        HyperlinkDTO dto = new HyperlinkDTO();
-
-        dto.setUrl(hyperlink.getUrl());
-        dto.setType(hyperlink.getType());
-
-        return dto;
     }
 }

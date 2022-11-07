@@ -26,6 +26,10 @@ public class Hyperlink {
     public Hyperlink() {
     }
 
+    static public HyperlinkBuilder builder() {
+        return new HyperlinkBuilder();
+    }
+
     public @NotNull Long getHyperlinkId() {
         return this.hyperlinkId;
     }
@@ -98,9 +102,5 @@ public class Hyperlink {
 
     public String toString() {
         return "Hyperlink(hyperlinkId=" + this.getHyperlinkId() + ", url=" + this.getUrl() + ", type=" + this.getType() + ", githubCommitSet=" + this.getGitCommits() + ")";
-    }
-
-    static public HyperlinkBuilder builder() {
-        return new HyperlinkBuilder();
     }
 }
