@@ -24,7 +24,7 @@ public class ProjectService {
 
         Project savedProject = projectRepository.put(1L, p);
 
-        if (!projectDTO.getSonarRepositoryURL().isBlank()) {
+        if (projectDTO.getSonarRepositoryURL() != null && !projectDTO.getSonarRepositoryURL().isBlank()) {
             HyperlinkOfAddSonarQubeURL hyperlinkOfAddSonarQubeURL = new HyperlinkOfAddSonarQubeURL();
             hyperlinkOfAddSonarQubeURL.setProjectId(savedProject.getProjectId());
             hyperlinkOfAddSonarQubeURL.setRepositoryURL(projectDTO.getSonarRepositoryURL());

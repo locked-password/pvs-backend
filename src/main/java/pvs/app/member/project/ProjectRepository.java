@@ -5,7 +5,7 @@ import pvs.app.common.PVSRepository;
 
 import java.util.List;
 
-@Service
+@Service("Repository")
 public class ProjectRepository extends PVSRepository<Long, Project, ProjectDataAccessor> {
 
     public ProjectRepository(ProjectDataAccessor projectDataAccessor) {

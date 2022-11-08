@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("DataAccessor")
 public interface ProjectDataAccessor extends CrudRepository<Project, Long> {
     @NotNull
     List<Project> findAll();
