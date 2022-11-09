@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 
 @Tag("Integration")
 @SpringBootTest(classes = Application.class)
-public class ProjectServiceTest {
+public class ProjectServiceIntegrationTest {
     @Autowired
     private ProjectService sut;
 
