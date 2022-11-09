@@ -5,13 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pvs.app.Application;
 import pvs.app.member.project.hyperlink.Hyperlink;
 import pvs.app.member.project.hyperlink.HyperlinkDTO;
@@ -27,23 +23,18 @@ import java.util.stream.Collectors;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
+@Tag("Integration")
 @SpringBootTest(classes = Application.class)
-@ExtendWith(SpringExtension.class)
-@Tag("Unit")
 public class ProjectServiceTest {
-    @InjectMocks
+    @Autowired
     private ProjectService sut;
 
     @SpyBean
+    @Autowired
     private ProjectRepository spyOnProjectRepository;
     private ProjectOfCreation stubbingProjectOfCreation;
     private Project stubbingProject;
 
-    @Autowired
-    public ProjectServiceTest(ProjectService sut, ProjectRepository spyOnProjectRepository) {
-        this.sut = sut;
-        this.spyOnProjectRepository = spyOnProjectRepository;
-    }
 
     @BeforeEach
     public void setup() throws IOException {
@@ -63,8 +54,6 @@ public class ProjectServiceTest {
         stubbingHyperlink.setUrl(stubbingProjectOfCreation.getSonarRepositoryURL());
         stubbingRepositories.add(stubbingHyperlink);
         stubbingProject.setHyperlinkSet(stubbingRepositories);
-
-        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -120,5 +109,4 @@ public class ProjectServiceTest {
                 .collect(Collectors.toList()));
         return dto;
     }
-
 }
