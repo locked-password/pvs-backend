@@ -5,7 +5,10 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public class PVSRepository<IdType, EntityType, DataAccessor extends CrudRepository<EntityType, IdType>> {
-    protected final DataAccessor dataAccessor;
+    protected DataAccessor dataAccessor;
+
+    public PVSRepository() {
+    }
 
     public PVSRepository(DataAccessor dataAccessor) {
         this.dataAccessor = dataAccessor;
