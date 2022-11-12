@@ -19,7 +19,7 @@ public class MemberService {
         this.roleService = roleService;
     }
 
-    public MemberDTO createUser(MemberDTO memberDTO) {
+    public MemberDTO createMember(MemberDTO memberDTO) {
         Member member = new Member();
 
         member.setUsername(memberDTO.getUsername());
@@ -32,13 +32,13 @@ public class MemberService {
         if (userRole != null) roleSet.add(userRole);
         member.setAuthorities(roleSet);
 
-        Member savedMember = memberRepository.put(null, member);
-        savedMember.setMemberId(1L);
+        Long memberId = memberDTO.getId();
+        Member savedMember = memberRepository.put(memberId, member);
 
         return MemberDTO.of(savedMember);
     }
 
-    public MemberDTO readUser(long id) {
+    public MemberDTO readMember(long id) {
         Member member = memberRepository.get(id);
         return MemberDTO.of(member);
     }

@@ -29,7 +29,7 @@ public class MemberController {
     @ApiOperation(value = "新建使用者")
     public ResponseEntity<String> createMember(@RequestBody MemberDTO memberDTO) {
         try {
-            if (null != memberService.createUser(memberDTO)) {
+            if (null != memberService.createMember(memberDTO)) {
                 return ResponseEntity.status(HttpStatus.OK).body("新建使用者成功");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("新建使用者失敗");

@@ -61,20 +61,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void get() {
-        // Context:
-        when(mockMemberRepository.get(1L)).thenReturn(stubbingMember);
-
-        // When:
-        MemberDTO dto = sut.readUser(1L);
-
-        // Then:
-        Assertions.assertEquals(stubbingMemberDTO.toString(), dto.toString());
-        verify(mockMemberRepository, times(1)).get(1L);
-    }
-
-    @Test
-    public void createUser() {
+    public void createMember() {
         // Context
         when(mockRoleService.getByName("USER")).thenReturn(userRole);
         when(mockMemberRepository.put(any(), isA(Member.class)))
@@ -84,9 +71,22 @@ public class MemberServiceTest {
         MemberDTO dto = new MemberDTO();
         dto.setUsername("ABC");
         dto.setPassword("123456");
-        MemberDTO memberDTO = sut.createUser(dto);
+        MemberDTO memberDTO = sut.createMember(dto);
 
         // Then
         Assertions.assertEquals(stubbingMemberDTO.getId(), memberDTO.getId());
+    }
+
+    @Test
+    public void readMember() {
+        // Context:
+        when(mockMemberRepository.get(1L)).thenReturn(stubbingMember);
+
+        // When:
+        MemberDTO dto = sut.readMember(1L);
+
+        // Then:
+        Assertions.assertEquals(stubbingMemberDTO.toString(), dto.toString());
+        verify(mockMemberRepository, times(1)).get(1L);
     }
 }
