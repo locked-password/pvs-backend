@@ -9,10 +9,6 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import pvs.app.api.sonarqube.get.BugDTO;
-import pvs.app.api.sonarqube.get.CodeCoverageDTO;
-import pvs.app.api.sonarqube.get.CodeSmellDTO;
-import pvs.app.api.sonarqube.get.DuplicationDTO;
 
 import java.io.IOException;
 import java.util.*;

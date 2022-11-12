@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pvs.app.api.sonarqube.get.BugDTO;
-import pvs.app.api.sonarqube.get.CodeCoverageDTO;
-import pvs.app.api.sonarqube.get.CodeSmellDTO;
-import pvs.app.api.sonarqube.get.DuplicationDTO;
 
 import java.io.IOException;
 import java.util.List;

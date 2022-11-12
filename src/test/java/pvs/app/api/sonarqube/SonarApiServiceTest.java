@@ -11,10 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import pvs.app.Application;
-import pvs.app.api.sonarqube.get.BugDTO;
-import pvs.app.api.sonarqube.get.CodeCoverageDTO;
-import pvs.app.api.sonarqube.get.CodeSmellDTO;
-import pvs.app.api.sonarqube.get.DuplicationDTO;
 
 import java.io.IOException;
 import java.util.List;

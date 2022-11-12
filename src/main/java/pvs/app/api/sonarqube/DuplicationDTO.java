@@ -1,4 +1,4 @@
-package pvs.app.api.sonarqube.get;
+package pvs.app.api.sonarqube;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
