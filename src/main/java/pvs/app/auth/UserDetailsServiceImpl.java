@@ -6,23 +6,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pvs.app.members.MemberDAO;
+import pvs.app.members.MemberDataAccessor;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     static final Logger logger = LogManager.getLogger(UserDetailsServiceImpl.class.getName());
 
-    private final MemberDAO memberDAO;
+    private final MemberDataAccessor memberDataAccessor;
 
-    UserDetailsServiceImpl(MemberDAO memberDAO) {
-        this.memberDAO = memberDAO;
+    UserDetailsServiceImpl(MemberDataAccessor memberDataAccessor) {
+        this.memberDataAccessor = memberDataAccessor;
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) {
         try {
-            return memberDAO.findByUsername(userName);
+            return memberDataAccessor.findByUsername(userName);
         } catch (UsernameNotFoundException e) {
             logger.debug(e.getMessage());
             e.printStackTrace();

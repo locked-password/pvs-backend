@@ -17,9 +17,9 @@ import java.util.Optional;
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Tag("Integration")
-public class MemberDAOIntegrationTest {
+public class MemberDataAccessorIntegrationTest {
     @Autowired
-    private MemberDAO memberDAO;
+    private MemberDataAccessor memberDataAccessor;
 
     private Member member01 = new Member();
 
@@ -27,24 +27,24 @@ public class MemberDAOIntegrationTest {
     public void setup() {
         member01.setUsername("aaaa");
         member01.setPassword("1234");
-        member01 = memberDAO.save(member01);
+        member01 = memberDataAccessor.save(member01);
 
         Member member02 = new Member();
         member02.setUsername("bbb");
         member02.setPassword("1234");
-        memberDAO.save(member02);
+        memberDataAccessor.save(member02);
     }
 
     @Test
     public void whenFindByAccount_thenReturnMember() {
-        Member foundEntity = memberDAO.findByUsername("aaaa");
+        Member foundEntity = memberDataAccessor.findByUsername("aaaa");
 
         Assertions.assertEquals(member01.getUsername(), foundEntity.getUsername());
     }
 
     @Test
     public void whenFindById_thenReturnMember() {
-        Optional<Member> foundEntity = memberDAO.findById(member01.getMemberId());
+        Optional<Member> foundEntity = memberDataAccessor.findById(member01.getMemberId());
 
         assert foundEntity.orElse(null) != null;
         Assertions.assertEquals(member01.getUsername(), foundEntity.orElse(null).getUsername());

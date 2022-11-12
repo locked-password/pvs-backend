@@ -27,7 +27,7 @@ public class MemberServiceTest {
     @MockBean
     private MemberRepository mockMemberRepository;
     private Member stubbingMember;
-    private MemberDTO stubbingMemberDTO;
+    private MemberOfCreation stubbingMemberOfCreation;
 
     @MockBean
     private RoleService mockRoleService;
@@ -48,10 +48,10 @@ public class MemberServiceTest {
         stubbingMember.setUsername("user");
         stubbingMember.setPassword("1234");
 
-        stubbingMemberDTO = new MemberDTO();
-        stubbingMemberDTO.setId(stubbingMember.getMemberId());
-        stubbingMemberDTO.setUsername(stubbingMember.getUsername());
-        stubbingMemberDTO.setPassword(stubbingMember.getPassword());
+        stubbingMemberOfCreation = new MemberOfCreation();
+        stubbingMemberOfCreation.setId(stubbingMember.getMemberId());
+        stubbingMemberOfCreation.setUsername(stubbingMember.getUsername());
+        stubbingMemberOfCreation.setPassword(stubbingMember.getPassword());
 
         userRole = new Role();
         userRole.setRoleId(1L);
@@ -68,13 +68,13 @@ public class MemberServiceTest {
                 .thenReturn(stubbingMember);
 
         // When
-        MemberDTO dto = new MemberDTO();
+        MemberOfCreation dto = new MemberOfCreation();
         dto.setUsername("ABC");
         dto.setPassword("123456");
-        MemberDTO memberDTO = sut.createMember(dto);
+        MemberOfCreation memberOfCreation = sut.createMember(dto);
 
         // Then
-        Assertions.assertEquals(stubbingMemberDTO.getId(), memberDTO.getId());
+        Assertions.assertEquals(stubbingMemberOfCreation.getId(), memberOfCreation.getId());
     }
 
     @Test
@@ -83,10 +83,10 @@ public class MemberServiceTest {
         when(mockMemberRepository.get(1L)).thenReturn(stubbingMember);
 
         // When:
-        MemberDTO dto = sut.readMember(1L);
+        MemberOfCreation dto = sut.readMember(1L);
 
         // Then:
-        Assertions.assertEquals(stubbingMemberDTO.toString(), dto.toString());
+        Assertions.assertEquals(stubbingMemberOfCreation.toString(), dto.toString());
         verify(mockMemberRepository, times(1)).get(1L);
     }
 }

@@ -3,13 +3,13 @@ package pvs.app.members;
 import lombok.Data;
 
 @Data
-public class MemberDTO {
+public class MemberOfCreation {
     private Long id;
     private String username;
     private String password;
 
-    static public MemberDTO of(Member m) {
-        MemberDTO dto = new MemberDTO();
+    static public MemberOfCreation of(Member m) {
+        MemberOfCreation dto = new MemberOfCreation();
 
         dto.setId(m.getMemberId());
         dto.setUsername(m.getUsername());

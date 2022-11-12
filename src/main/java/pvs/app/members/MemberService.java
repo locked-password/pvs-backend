@@ -19,12 +19,12 @@ public class MemberService {
         this.roleService = roleService;
     }
 
-    public MemberDTO createMember(MemberDTO memberDTO) {
+    public MemberOfCreation createMember(MemberOfCreation memberOfCreation) {
         Member member = new Member();
 
-        member.setUsername(memberDTO.getUsername());
+        member.setUsername(memberOfCreation.getUsername());
 
-        String encodePassword = DigestUtils.md5DigestAsHex(memberDTO.getPassword().getBytes());
+        String encodePassword = DigestUtils.md5DigestAsHex(memberOfCreation.getPassword().getBytes());
         member.setPassword(encodePassword);
 
         Set<Role> roleSet = new HashSet<>();
@@ -32,14 +32,14 @@ public class MemberService {
         if (userRole != null) roleSet.add(userRole);
         member.setAuthorities(roleSet);
 
-        Long memberId = memberDTO.getId();
+        Long memberId = memberOfCreation.getId();
         Member savedMember = memberRepository.put(memberId, member);
 
-        return MemberDTO.of(savedMember);
+        return MemberOfCreation.of(savedMember);
     }
 
-    public MemberDTO readMember(long id) {
+    public MemberOfCreation readMember(long id) {
         Member member = memberRepository.get(id);
-        return MemberDTO.of(member);
+        return MemberOfCreation.of(member);
     }
 }

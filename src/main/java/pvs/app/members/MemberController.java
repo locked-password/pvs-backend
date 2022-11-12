@@ -27,9 +27,9 @@ public class MemberController {
 
     @PostMapping("/members")
     @ApiOperation(value = "新建使用者")
-    public ResponseEntity<String> createMember(@RequestBody MemberDTO memberDTO) {
+    public ResponseEntity<String> createMember(@RequestBody MemberOfCreation memberOfCreation) {
         try {
-            if (null != memberService.createMember(memberDTO)) {
+            if (null != memberService.createMember(memberOfCreation)) {
                 return ResponseEntity.status(HttpStatus.OK).body("新建使用者成功");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("新建使用者失敗");
