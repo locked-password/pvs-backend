@@ -1,6 +1,5 @@
 package pvs.app.api.sonarqube;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,79 +28,33 @@ public class SonarQubeAgentController {
     }
 
     @GetMapping("/components/{component}/coverage")
-    public ResponseEntity<String> getCoverage(@PathVariable("component") String component) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ResponseEntity<List> getCoverage(@PathVariable("component") String component) throws IOException {
         List<CodeCoverageDTO> coverages = sonarQubeAgentService.getSonarCodeCoverage(component);
-        if (!coverages.isEmpty()) {
-            String coverageString = objectMapper.writeValueAsString(coverages);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(coverageString);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(failMessage);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(coverages);
     }
 
     @GetMapping("/components/{component}/bug")
-    public ResponseEntity<String> getBug(@PathVariable("component") String component) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<BugDTO> bugList = sonarQubeAgentService.getSonarBug(component);
-        if (!bugList.isEmpty()) {
-            String bugListString = objectMapper.writeValueAsString(bugList);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(bugListString);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(failMessage);
-        }
+    public ResponseEntity<List> getBug(@PathVariable("component") String component) throws IOException {
+        List<BugDTO> bugs = sonarQubeAgentService.getSonarBug(component);
+        return ResponseEntity.status(HttpStatus.OK).body(bugs);
     }
 
     @GetMapping("/components/{component}/code_smell")
-    public ResponseEntity<String> getCodeSmell(@PathVariable("component") String component) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<CodeSmellDTO> codeSmellList = sonarQubeAgentService.getSonarCodeSmell(component);
-        if (!codeSmellList.isEmpty()) {
-            String codeSmellListString = objectMapper.writeValueAsString(codeSmellList);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(codeSmellListString);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(failMessage);
-        }
+    public ResponseEntity<List> getCodeSmell(@PathVariable("component") String component) throws IOException {
+        List<CodeSmellDTO> codeSmells = sonarQubeAgentService.getSonarCodeSmell(component);
+        return ResponseEntity.status(HttpStatus.OK).body(codeSmells);
     }
 
     @GetMapping("/components/{component}/duplication")
-    public ResponseEntity<String> getDuplication(@PathVariable("component") String component) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<DuplicationDTO> duplicationList = sonarQubeAgentService.getDuplication(component);
-        if (!duplicationList.isEmpty()) {
-            String duplicationListString = objectMapper.writeValueAsString(duplicationList);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(duplicationListString);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(failMessage);
-        }
+    public ResponseEntity<List> getDuplication(@PathVariable("component") String component) throws IOException {
+        List<DuplicationDTO> duplications = sonarQubeAgentService.getDuplication(component);
+        return ResponseEntity.status(HttpStatus.OK).body(duplications);
     }
 
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> ioExceptionHandler(Exception e) {
         logger.debug(e.getMessage());
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(exceptionMessage);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionMessage);
     }
 }
