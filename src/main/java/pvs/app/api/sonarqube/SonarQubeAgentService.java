@@ -2,8 +2,6 @@ package pvs.app.api.sonarqube;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +14,6 @@ import java.util.*;
 @Service
 @SuppressWarnings("squid:S1192")
 public class SonarQubeAgentService {
-
-    static final Logger logger = LogManager.getLogger(SonarQubeAgentService.class.getName());
 
     private final WebClient webClient;
 
