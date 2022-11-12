@@ -17,11 +17,11 @@ import java.util.List;
 public class SonarQubeAgentController {
 
     static final Logger logger = LogManager.getLogger(SonarQubeAgentController.class.getName());
-    private final SonarQubeAgentService sonarQubeAgentService;
+    private final SonarQubeAgentRepository sonarQubeAgentService;
     @Value("${message.exception}")
     private String exceptionMessage;
 
-    public SonarQubeAgentController(SonarQubeAgentService sonarQubeAgentService) {
+    public SonarQubeAgentController(SonarQubeAgentRepository sonarQubeAgentService) {
         this.sonarQubeAgentService = sonarQubeAgentService;
     }
 

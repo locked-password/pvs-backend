@@ -13,19 +13,23 @@ import java.util.*;
 
 @Service
 @SuppressWarnings("squid:S1192")
-public class SonarQubeAgentService {
+public class SonarQubeAgentRepository {
 
     private final WebClient webClient;
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     private final DateTimeFormatter isoParser;
 
-    public SonarQubeAgentService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.sonar}") String baseUrl) {
+    public SonarQubeAgentRepository(
+            WebClient.Builder webClientBuilder,
+            @Value("${webClient.baseUrl.sonar}") String baseUrl) {
         String token = System.getenv("PVS_SONAR_TOKEN");
-        this.webClient = webClientBuilder.baseUrl(baseUrl)
+        this.webClient = webClientBuilder
+                .baseUrl(baseUrl)
                 .defaultHeader("Authorization", "Bearer " + token)
                 .build();
+        mapper = new ObjectMapper();
         isoParser = ISODateTimeFormat.dateTimeNoMillis().withLocale(Locale.TAIWAN);
     }
 

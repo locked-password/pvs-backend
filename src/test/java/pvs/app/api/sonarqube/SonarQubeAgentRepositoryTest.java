@@ -18,16 +18,16 @@ import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
-public class SonarQubeAgentServiceTest {
+public class SonarQubeAgentRepositoryTest {
     @Autowired
-    private SonarQubeAgentService sonarQubeAgentService;
+    private SonarQubeAgentRepository sonarQubeAgentService;
 
     private MockWebServer mockWebServer;
 
     @BeforeEach
     public void setup() {
         this.mockWebServer = new MockWebServer();
-        this.sonarQubeAgentService = new SonarQubeAgentService(WebClient.builder(), mockWebServer.url("/").toString());
+        this.sonarQubeAgentService = new SonarQubeAgentRepository(WebClient.builder(), mockWebServer.url("/").toString());
     }
 
     @Test
