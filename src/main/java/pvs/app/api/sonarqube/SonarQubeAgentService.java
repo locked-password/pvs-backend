@@ -17,6 +17,8 @@ public class SonarQubeAgentService {
 
     private final WebClient webClient;
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     private final DateTimeFormatter isoParser;
 
     public SonarQubeAgentService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.sonar}") String baseUrl) {
@@ -34,7 +36,6 @@ public class SonarQubeAgentService {
                 .block();
 
         List<CodeCoverageDTO> coverages = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
         Optional<JsonNode> coverageJsonNodes = Optional
                 .ofNullable(mapper.readTree(responseJson))
                 .map(response -> response.get("measures"));
@@ -62,7 +63,6 @@ public class SonarQubeAgentService {
                 .bodyToMono(String.class)
                 .block();
 
-        ObjectMapper mapper = new ObjectMapper();
         List<BugDTO> bugList = new ArrayList<>();
         Optional<JsonNode> bugJsonNodes = Optional.ofNullable(mapper.readTree(responseJson))
                 .map(resp -> resp.get("measures"));
@@ -94,7 +94,6 @@ public class SonarQubeAgentService {
                 .bodyToMono(String.class)
                 .block();
 
-        ObjectMapper mapper = new ObjectMapper();
         List<CodeSmellDTO> codeSmellList = new ArrayList<>();
         Optional<JsonNode> codeSmellJsonNodes = Optional.ofNullable(mapper.readTree(responseJson))
                 .map(resp -> resp.get("measures"));
@@ -125,7 +124,6 @@ public class SonarQubeAgentService {
                 .bodyToMono(String.class)
                 .block();
 
-        ObjectMapper mapper = new ObjectMapper();
         List<DuplicationDTO> duplicationList = new ArrayList<>();
         Optional<JsonNode> duplicationJsonNodes = Optional.ofNullable(mapper.readTree(responseJson))
                 .map(resp -> resp.get("measures"));
