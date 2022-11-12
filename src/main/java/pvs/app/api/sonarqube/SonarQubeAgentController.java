@@ -28,7 +28,7 @@ public class SonarQubeAgentController {
     @GetMapping("/components/{component}/coverages")
     public ResponseEntity<List<CodeCoverageDTO>>
     getCoverages(@PathVariable("component") String component) throws IOException {
-        List<CodeCoverageDTO> coverages = sonarQubeAgentService.getSonarCodeCoverage(component);
+        List<CodeCoverageDTO> coverages = sonarQubeAgentService.getAllSonarCodeCoverageByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(coverages);
     }
 

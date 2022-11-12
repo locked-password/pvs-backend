@@ -37,7 +37,7 @@ public class SonarQubeAgentServiceTest {
                 .setBody("{\"measures\":[{\"history\":[{\"date\":\"2020-11-20T19:38:25+0800\", \"value\":\"22.5\"}]}]}")
                 .addHeader("Content-Type", "application/json")
         );
-        List<CodeCoverageDTO> data = sonarQubeAgentService.getSonarCodeCoverage("pvs-springboot");
+        List<CodeCoverageDTO> data = sonarQubeAgentService.getAllSonarCodeCoverageByComponent("pvs-springboot");
         Assertions.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
     }
 

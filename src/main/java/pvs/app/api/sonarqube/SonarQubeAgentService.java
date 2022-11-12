@@ -27,36 +27,30 @@ public class SonarQubeAgentService {
         isoParser = ISODateTimeFormat.dateTimeNoMillis().withLocale(Locale.TAIWAN);
     }
 
-    public List<CodeCoverageDTO> getSonarCodeCoverage(String component) throws IOException {
-        String responseJson = Objects.requireNonNull(this.webClient.get()
-                        .uri("/measures/search_history?component=" + component + "&metrics=coverage")
-                        .exchange()
-                        .block())
-                .bodyToMono(String.class)
+    public List<CodeCoverageDTO> getAllSonarCodeCoverageByComponent(String component) throws IOException {
+        String responseJson = this.webClient
+                .get().uri("/measures/search_history?component=" + component + "&metrics=coverage")
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class))
                 .block();
 
-        ObjectMapper mapper = new ObjectMapper();
         List<CodeCoverageDTO> coverages = new ArrayList<>();
-        Optional<JsonNode> coverageJsonNodes = Optional.ofNullable(mapper.readTree(responseJson))
-                .map(resp -> resp.get("measures"));
+        ObjectMapper mapper = new ObjectMapper();
+        Optional<JsonNode> coverageJsonNodes = Optional
+                .ofNullable(mapper.readTree(responseJson))
+                .map(response -> response.get("measures"));
+        assert coverageJsonNodes.isPresent();
 
-        if (coverageJsonNodes.isPresent()) {
-            JsonNode coverageArrayNode = coverageJsonNodes.get().get(0).get("history");
+        JsonNode coverageHistoryJsonNodes = coverageJsonNodes.get().get(0).get("history");
+        assert coverageHistoryJsonNodes.isArray();
 
-            if (coverageArrayNode.isArray()) {
-                for (final JsonNode jsonNode : coverageArrayNode) {
+        for (final JsonNode jsonNode : coverageHistoryJsonNodes) {
+            String dateString = jsonNode.get("date").toPrettyString();
+            double coverageValue = jsonNode.get("value").asDouble();
 
-                    Date date =
-                            isoParser.parseDateTime(jsonNode.get("date").textValue().replace("\"", ""))
-                                    .toDate();
-                    double coverageValue = 0;
-                    if (null != jsonNode.get("value")) {
-                        coverageValue = jsonNode.get("value").asDouble();
-                    }
-                    coverages.add(new CodeCoverageDTO(date, coverageValue));
-                }
-            }
+            Date date = isoParser.parseDateTime(dateString).toDate();
+            coverages.add(new CodeCoverageDTO(date, coverageValue));
         }
+
         return coverages;
     }
 
