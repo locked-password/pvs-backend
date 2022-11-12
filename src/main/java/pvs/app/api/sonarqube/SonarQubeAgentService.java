@@ -15,15 +15,15 @@ import java.util.*;
 
 @Service
 @SuppressWarnings("squid:S1192")
-public class SonarApiService {
+public class SonarQubeAgentService {
 
-    static final Logger logger = LogManager.getLogger(SonarApiService.class.getName());
+    static final Logger logger = LogManager.getLogger(SonarQubeAgentService.class.getName());
 
     private final WebClient webClient;
 
     private final DateTimeFormatter isoParser;
 
-    public SonarApiService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.sonar}") String baseUrl) {
+    public SonarQubeAgentService(WebClient.Builder webClientBuilder, @Value("${webClient.baseUrl.sonar}") String baseUrl) {
         String token = System.getenv("PVS_SONAR_TOKEN");
         this.webClient = webClientBuilder.baseUrl(baseUrl)
                 .defaultHeader("Authorization", "Bearer " + token)

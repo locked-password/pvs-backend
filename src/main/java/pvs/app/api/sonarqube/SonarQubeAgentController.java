@@ -18,24 +18,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/sonarqube-agent", produces = MediaType.APPLICATION_JSON_VALUE)
-public class SonarApiController {
+public class SonarQubeAgentController {
 
-    static final Logger logger = LogManager.getLogger(SonarApiController.class.getName());
-    private final SonarApiService sonarApiService;
+    static final Logger logger = LogManager.getLogger(SonarQubeAgentController.class.getName());
+    private final SonarQubeAgentService sonarQubeAgentService;
     @Value("${message.exception}")
     private String exceptionMessage;
     @Value("${message.fail}")
     private String failMessage;
 
-    public SonarApiController(SonarApiService sonarApiService) {
-        this.sonarApiService = sonarApiService;
+    public SonarQubeAgentController(SonarQubeAgentService sonarQubeAgentService) {
+        this.sonarQubeAgentService = sonarQubeAgentService;
     }
 
     @GetMapping("/components/{component}/coverage")
     public ResponseEntity<String> getCoverage(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<CodeCoverageDTO> coverages = sonarApiService.getSonarCodeCoverage(component);
+            List<CodeCoverageDTO> coverages = sonarQubeAgentService.getSonarCodeCoverage(component);
             if (!coverages.isEmpty()) {
                 String coverageString = objectMapper.writeValueAsString(coverages);
 
@@ -57,7 +57,7 @@ public class SonarApiController {
     public ResponseEntity<String> getBug(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<BugDTO> bugList = sonarApiService.getSonarBug(component);
+            List<BugDTO> bugList = sonarQubeAgentService.getSonarBug(component);
             if (!bugList.isEmpty()) {
                 String bugListString = objectMapper.writeValueAsString(bugList);
 
@@ -79,7 +79,7 @@ public class SonarApiController {
     public ResponseEntity<String> getCodeSmell(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<CodeSmellDTO> codeSmellList = sonarApiService.getSonarCodeSmell(component);
+            List<CodeSmellDTO> codeSmellList = sonarQubeAgentService.getSonarCodeSmell(component);
             if (!codeSmellList.isEmpty()) {
                 String codeSmellListString = objectMapper.writeValueAsString(codeSmellList);
 
@@ -101,7 +101,7 @@ public class SonarApiController {
     public ResponseEntity<String> getDuplication(@PathVariable("component") String component) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<DuplicationDTO> duplicationList = sonarApiService.getDuplication(component);
+            List<DuplicationDTO> duplicationList = sonarQubeAgentService.getDuplication(component);
             if (!duplicationList.isEmpty()) {
                 String duplicationListString = objectMapper.writeValueAsString(duplicationList);
 

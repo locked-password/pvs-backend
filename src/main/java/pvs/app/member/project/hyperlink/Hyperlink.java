@@ -1,6 +1,6 @@
 package pvs.app.member.project.hyperlink;
 
-import pvs.app.api.git.commit.GitCommit;
+import pvs.app.api.git.GitCommit;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

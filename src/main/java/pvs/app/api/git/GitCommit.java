@@ -1,4 +1,4 @@
-package pvs.app.api.git.commit;
+package pvs.app.api.git;
 
 import lombok.Data;
 import pvs.app.member.project.hyperlink.Hyperlink;
