@@ -6,10 +6,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="pvs.app.member.project.ProjectService" level="debug" additivity="false">
+        <Logger name="pvs.app.members.projects.ProjectService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.member.project.hyperlink.HyperlinkService" level="debug" additivity="false">
+        <Logger name="pvs.app.members.projects.hyperlinks.HyperlinkService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="pvs.app.agents.github.issue.GithubIssueLoaderThread" level="debug" additivity="false">
@@ -33,14 +33,14 @@
         <Logger name="pvs.app.auth.UserDetailsServiceImpl" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.member.MemberController" level="debug" additivity="false">
+        <Logger name="pvs.app.members.MemberController" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="pvs.app.auth.AuthController" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="pvs.app.member.project.ProjectController" level="debug" additivity="false">
+        <Logger name="pvs.app.members.projects.ProjectController" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 

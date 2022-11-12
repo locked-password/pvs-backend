@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
-import pvs.app.member.Member;
-import pvs.app.member.role.Role;
+import pvs.app.members.Member;
+import pvs.app.members.roles.Role;
 
 import java.util.Set;
 

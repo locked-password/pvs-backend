@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import pvs.app.member.Member;
+import pvs.app.members.Member;
 
 import java.io.Serializable;
 import java.time.Instant;

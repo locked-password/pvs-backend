@@ -1,7 +1,7 @@
 package pvs.app.agents.git;
 
 import lombok.Data;
-import pvs.app.member.project.hyperlink.Hyperlink;
+import pvs.app.members.projects.hyperlinks.Hyperlink;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
