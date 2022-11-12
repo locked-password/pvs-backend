@@ -1,6 +1,6 @@
 package pvs.app.member.project.hyperlink;
 
-import pvs.app.api.git.GitCommit;
+import pvs.app.agents.git.GitCommit;
 
 import java.util.Set;
 

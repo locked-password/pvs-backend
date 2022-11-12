@@ -1,4 +1,4 @@
-package pvs.app.api.sonarqube;
+package pvs.app.agents.sonarqube;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path = "/sonarqube-agent", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/agents/sonarqube", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SonarQubeAgentController {
 
     static final Logger logger = LogManager.getLogger(SonarQubeAgentController.class.getName());

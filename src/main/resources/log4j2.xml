@@ -12,13 +12,13 @@
         <Logger name="pvs.app.member.project.hyperlink.HyperlinkService" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.api.github.issue.GithubIssueLoaderThread" level="debug" additivity="false">
+        <Logger name="pvs.app.agents.github.issue.GithubIssueLoaderThread" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.api.sonarqube.SonarQubeAgentRepository" level="debug" additivity="false">
+        <Logger name="pvs.app.agents.sonarqube.SonarQubeAgentRepository" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="pvs.app.api.sonarqube.SonarQubeAgentController" level="debug" additivity="false">
+        <Logger name="pvs.app.agents.sonarqube.SonarQubeAgentController" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="pvs.app.auth.JwtTokenFilter" level="debug" additivity="false">

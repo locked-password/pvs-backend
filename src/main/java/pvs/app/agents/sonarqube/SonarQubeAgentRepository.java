@@ -1,4 +1,4 @@
-package pvs.app.api.sonarqube;
+package pvs.app.agents.sonarqube;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package pvs.app.api.sonarqube;
+package pvs.app.agents.sonarqube;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
