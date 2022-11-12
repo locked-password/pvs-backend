@@ -37,7 +37,7 @@ public class SonarQubeAgentRepositoryTest {
                 .setBody("{\"measures\":[{\"history\":[{\"date\":\"2020-11-20T19:38:25+0800\", \"value\":\"22.5\"}]}]}")
                 .addHeader("Content-Type", "application/json")
         );
-        List<CodeCoverageDTO> data = sonarQubeAgentService.getAllSonarCodeCoverageByComponent("pvs-springboot");
+        List<CodeCoverageDTO> data = sonarQubeAgentService.getCoverageHistoryByComponent("pvs-springboot");
         Assertions.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
     }
 
@@ -48,7 +48,7 @@ public class SonarQubeAgentRepositoryTest {
                 .setBody("{\"measures\":[{\"history\":[{\"date\":\"2020-11-20T19:38:25+0800\", \"value\":\"22\"}]}]}")
                 .addHeader("Content-Type", "application/json")
         );
-        List<BugDTO> data = sonarQubeAgentService.getSonarBug("pvs-springboot");
+        List<BugDTO> data = sonarQubeAgentService.getBugHistoryByComponent("pvs-springboot");
         Assertions.assertEquals(Integer.valueOf(22), data.get(0).getValue());
     }
 
@@ -59,7 +59,7 @@ public class SonarQubeAgentRepositoryTest {
                 .setBody("{\"measures\":[{\"history\":[{\"date\":\"2020-11-20T19:38:25+0800\", \"value\":\"22\"}]}]}")
                 .addHeader("Content-Type", "application/json")
         );
-        List<CodeSmellDTO> data = sonarQubeAgentService.getSonarCodeSmell("pvs-springboot");
+        List<CodeSmellDTO> data = sonarQubeAgentService.getCodeSmellHistoryByComponent("pvs-springboot");
         Assertions.assertEquals(Integer.valueOf(22), data.get(0).getValue());
     }
 
@@ -70,7 +70,7 @@ public class SonarQubeAgentRepositoryTest {
                 .setBody("{\"measures\":[{\"history\":[{\"date\":\"2020-11-20T19:38:25+0800\", \"value\":\"22.5\"}]}]}")
                 .addHeader("Content-Type", "application/json")
         );
-        List<DuplicationDTO> data = sonarQubeAgentService.getDuplication("pvs-springboot");
+        List<DuplicationDTO> data = sonarQubeAgentService.getDuplicationHistoryByComponent("pvs-springboot");
         Assertions.assertEquals(Double.valueOf(22.5), data.get(0).getValue());
     }
 }

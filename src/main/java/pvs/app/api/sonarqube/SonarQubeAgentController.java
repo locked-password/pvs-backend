@@ -28,28 +28,28 @@ public class SonarQubeAgentController {
     @GetMapping("/components/{component}/coverages")
     public ResponseEntity<List<CodeCoverageDTO>>
     getCoverages(@PathVariable("component") String component) throws IOException {
-        List<CodeCoverageDTO> coverages = sonarQubeAgentService.getAllSonarCodeCoverageByComponent(component);
+        List<CodeCoverageDTO> coverages = sonarQubeAgentService.getCoverageHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(coverages);
     }
 
     @GetMapping("/components/{component}/bugs")
     public ResponseEntity<List<BugDTO>>
     getBugs(@PathVariable("component") String component) throws IOException {
-        List<BugDTO> bugs = sonarQubeAgentService.getSonarBug(component);
+        List<BugDTO> bugs = sonarQubeAgentService.getBugHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(bugs);
     }
 
     @GetMapping("/components/{component}/code_smells")
     public ResponseEntity<List<CodeSmellDTO>>
     getCodeSmells(@PathVariable("component") String component) throws IOException {
-        List<CodeSmellDTO> codeSmells = sonarQubeAgentService.getSonarCodeSmell(component);
+        List<CodeSmellDTO> codeSmells = sonarQubeAgentService.getCodeSmellHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(codeSmells);
     }
 
     @GetMapping("/components/{component}/duplications")
     public ResponseEntity<List<DuplicationDTO>>
     getDuplications(@PathVariable("component") String component) throws IOException {
-        List<DuplicationDTO> duplications = sonarQubeAgentService.getDuplication(component);
+        List<DuplicationDTO> duplications = sonarQubeAgentService.getDuplicationHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(duplications);
     }
 

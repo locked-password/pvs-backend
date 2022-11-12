@@ -33,7 +33,7 @@ public class SonarQubeAgentRepository {
         isoParser = ISODateTimeFormat.dateTimeNoMillis().withLocale(Locale.TAIWAN);
     }
 
-    public List<CodeCoverageDTO> getAllSonarCodeCoverageByComponent(String component) throws IOException {
+    public List<CodeCoverageDTO> getCoverageHistoryByComponent(String component) throws IOException {
         String responseJson = this.webClient
                 .get().uri("/measures/search_history?component=" + component + "&metrics=coverage")
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class))
@@ -59,7 +59,7 @@ public class SonarQubeAgentRepository {
         return coverages;
     }
 
-    public List<BugDTO> getSonarBug(String component) throws IOException {
+    public List<BugDTO> getBugHistoryByComponent(String component) throws IOException {
         String responseJson = Objects.requireNonNull(this.webClient.get()
                         .uri("/measures/search_history?component=" + component + "&metrics=bugs")
                         .exchange()
@@ -90,7 +90,7 @@ public class SonarQubeAgentRepository {
         return bugList;
     }
 
-    public List<CodeSmellDTO> getSonarCodeSmell(String component) throws IOException {
+    public List<CodeSmellDTO> getCodeSmellHistoryByComponent(String component) throws IOException {
         String responseJson = Objects.requireNonNull(this.webClient.get()
                         .uri("/measures/search_history?component=" + component + "&metrics=code_smells")
                         .exchange()
@@ -120,7 +120,7 @@ public class SonarQubeAgentRepository {
         return codeSmellList;
     }
 
-    public List<DuplicationDTO> getDuplication(String component) throws IOException {
+    public List<DuplicationDTO> getDuplicationHistoryByComponent(String component) throws IOException {
         String responseJson = Objects.requireNonNull(this.webClient.get()
                         .uri("/measures/search_history?component=" + component + "&metrics=duplicated_lines_density")
                         .exchange()
