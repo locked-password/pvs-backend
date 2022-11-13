@@ -64,7 +64,7 @@ public class MemberServiceTest {
     public void createMember() {
         // Context
         when(mockRoleService.getByName("USER")).thenReturn(userRole);
-        when(mockMemberRepository.put(any(), isA(Member.class)))
+        when(mockMemberRepository.put(isA(Member.class)))
                 .thenReturn(stubbingMember);
 
         // When

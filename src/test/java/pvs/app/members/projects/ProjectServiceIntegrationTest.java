@@ -54,7 +54,7 @@ public class ProjectServiceIntegrationTest {
         stubbingHyperlink.setUrl(stubbingProjectOfCreation.getSonarRepositoryURL());
         stubbingRepositories.add(stubbingHyperlink);
         stubbingProject.setHyperlinkSet(stubbingRepositories);
-        doReturn(stubbingProject).when(spyOnProjectRepository).put(anyLong(), isA(Project.class));
+        doReturn(stubbingProject).when(spyOnProjectRepository).put(isA(Project.class));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ProjectServiceIntegrationTest {
         spyOnSUT.create(stubbingProjectOfCreation);
 
         // Then:
-        verify(spyOnProjectRepository, atLeast(1)).put(any(), isA(Project.class));
+        verify(spyOnProjectRepository, atLeast(1)).put(isA(Project.class));
     }
 
     @Test

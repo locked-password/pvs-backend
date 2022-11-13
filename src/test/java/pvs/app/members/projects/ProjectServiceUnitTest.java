@@ -36,7 +36,7 @@ class ProjectServiceUnitTest {
         spyOnSUT.create(stubbingProjectOfCreation);
 
         verify(spyOnProjectRepository, atLeast(1))
-                .put(anyLong(), isA(Project.class));
+                .put(isA(Project.class));
 
     }
 }

@@ -19,8 +19,7 @@ public class PVSRepository<IdType, EntityType, DataAccessor extends CrudReposito
         return p.orElse(null);
     }
 
-    public EntityType put(IdType id, EntityType entity) {
-        if (dataAccessor.existsById(id)) dataAccessor.deleteById(id);
+    public EntityType put(EntityType entity) {
         return dataAccessor.save(entity);
     }
 

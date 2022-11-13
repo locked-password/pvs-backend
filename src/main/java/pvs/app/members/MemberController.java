@@ -29,8 +29,9 @@ public class MemberController {
     @ApiOperation(value = "新建使用者")
     public ResponseEntity<String> createMember(@RequestBody MemberOfCreation memberOfCreation) {
         try {
-            if (null != memberService.createMember(memberOfCreation)) {
-                return ResponseEntity.status(HttpStatus.OK).body("新建使用者成功");
+            MemberOfCreation createdMember = memberService.createMember(memberOfCreation);
+            if (null != createdMember) {
+                return ResponseEntity.status(HttpStatus.OK).body("新建使用者成功: " + createdMember.getId());
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("新建使用者失敗");
             }

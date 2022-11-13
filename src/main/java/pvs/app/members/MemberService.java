@@ -32,8 +32,7 @@ public class MemberService {
         if (userRole != null) roleSet.add(userRole);
         member.setAuthorities(roleSet);
 
-        Long memberId = memberOfCreation.getId();
-        Member savedMember = memberRepository.put(memberId, member);
+        Member savedMember = memberRepository.put(member);
 
         return MemberOfCreation.of(savedMember);
     }

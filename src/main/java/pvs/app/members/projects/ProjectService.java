@@ -25,7 +25,7 @@ public class ProjectService {
                 .setName(projectDTO.getProjectName())
                 .build();
 
-        Project savedProject = projectRepository.put(1L, p);
+        Project savedProject = projectRepository.put(p);
 
         if (projectDTO.getSonarRepositoryURL() != null && !projectDTO.getSonarRepositoryURL().isBlank()) {
             HyperlinkOfAddSonarQubeURL hyperlinkOfAddSonarQubeURL = new HyperlinkOfAddSonarQubeURL();
@@ -46,7 +46,7 @@ public class ProjectService {
                             .setType("sonar")
                             .build());
 
-            projectRepository.put(hyperlinkOfAddSonarQubeURL.getProjectId(), project);
+            projectRepository.put(project);
             return true;
         } else {
             return false;

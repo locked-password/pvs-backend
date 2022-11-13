@@ -13,7 +13,6 @@ import pvs.app.members.projects.hyperlinks.HyperlinkOfAddSonarQubeURL;
 
 import java.io.IOException;
 
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willReturn;
@@ -45,7 +44,7 @@ class ProjectServiceBDDUnitTest {
                 .addSonarRepo(isA(HyperlinkOfAddSonarQubeURL.class));
         willReturn(new Project())
                 .given(spyOnProjectRepository)
-                .put(anyLong(), isA(Project.class));
+                .put(isA(Project.class));
         ProjectOfCreation stubbingProjectOfCreation = new ProjectOfCreation();
         stubbingProjectOfCreation.setProjectName("react");
         stubbingProjectOfCreation.setSonarRepositoryURL("http://140.124.181.143:9000/dashboard?id=pvs-springboot");
@@ -54,7 +53,7 @@ class ProjectServiceBDDUnitTest {
 
         then(spyOnProjectRepository)
                 .should(atLeast(1))
-                .put(anyLong(), isA(Project.class));
+                .put(isA(Project.class));
     }
 
     @AfterEach

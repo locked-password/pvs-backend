@@ -15,7 +15,7 @@ public class RoleService {
         Role role = new Role();
         role.setName(roleDTO.getName());
 
-        Role savedRole = roleRepository.put(null, role);
+        Role savedRole = roleRepository.put(role);
 
         return RoleDTO.of(savedRole);
     }
