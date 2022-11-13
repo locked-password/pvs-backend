@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import pvs.app.Application;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import pvs.app.members.projects.hyperlinks.Hyperlink;
 import pvs.app.members.projects.hyperlinks.HyperlinkDTO;
 import pvs.app.members.projects.hyperlinks.HyperlinkOfAddSonarQubeURL;
@@ -24,13 +25,12 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 @Tag("Integration")
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = ProjectServiceIntegrationTest.Context.class)
 public class ProjectServiceIntegrationTest {
     @Autowired
     private ProjectService sut;
 
     @SpyBean
-    @Autowired
     private ProjectRepository spyOnProjectRepository;
     private ProjectOfCreation stubbingProjectOfCreation;
     private Project stubbingProject;
@@ -54,6 +54,7 @@ public class ProjectServiceIntegrationTest {
         stubbingHyperlink.setUrl(stubbingProjectOfCreation.getSonarRepositoryURL());
         stubbingRepositories.add(stubbingHyperlink);
         stubbingProject.setHyperlinkSet(stubbingRepositories);
+        doReturn(stubbingProject).when(spyOnProjectRepository).put(anyLong(), isA(Project.class));
     }
 
     @Test
@@ -108,5 +109,23 @@ public class ProjectServiceIntegrationTest {
                 })
                 .collect(Collectors.toList()));
         return dto;
+    }
+
+    @Configuration
+    static public class Context {
+        @Bean
+        static ProjectDataAccessor projectDataAccessor() {
+            return when(mock(ProjectDataAccessor.class).existsById(anyLong())).thenReturn(true).getMock();
+        }
+
+        @Bean
+        static ProjectRepository projectRepository(ProjectDataAccessor projectDataAccessor) {
+            return spy(new ProjectRepository(projectDataAccessor));
+        }
+
+        @Bean
+        static ProjectService projectService(ProjectRepository projectRepository) {
+            return new ProjectService(projectRepository);
+        }
     }
 }
