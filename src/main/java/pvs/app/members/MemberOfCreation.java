@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @ApiModel(description = "要被新建的使用者")
 public class MemberOfCreation {
-    @ApiModelProperty(notes = "要被新建的使用者ID", required = true)
+    @ApiModelProperty(notes = "要被新建的使用者ID")
     private Long id;
 
     @ApiModelProperty(notes = "要被新建的使用者名稱", required = true)
