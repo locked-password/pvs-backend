@@ -26,30 +26,30 @@ public class SonarQubeAgentController {
     }
 
     @GetMapping("/components/{component}/coverages")
-    public ResponseEntity<List<CodeCoverageDTO>>
+    public ResponseEntity<List<MetricsDTO>>
     getCoverages(@PathVariable("component") String component) throws IOException {
-        List<CodeCoverageDTO> coverages = sonarQubeAgentService.getCoverageHistoryByComponent(component);
+        List<MetricsDTO> coverages = sonarQubeAgentService.getCoverageHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(coverages);
     }
 
     @GetMapping("/components/{component}/bugs")
-    public ResponseEntity<List<BugDTO>>
+    public ResponseEntity<List<MetricsDTO>>
     getBugs(@PathVariable("component") String component) throws IOException {
-        List<BugDTO> bugs = sonarQubeAgentService.getBugHistoryByComponent(component);
+        List<MetricsDTO> bugs = sonarQubeAgentService.getBugHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(bugs);
     }
 
     @GetMapping("/components/{component}/code_smells")
-    public ResponseEntity<List<CodeSmellDTO>>
+    public ResponseEntity<List<MetricsDTO>>
     getCodeSmells(@PathVariable("component") String component) throws IOException {
-        List<CodeSmellDTO> codeSmells = sonarQubeAgentService.getCodeSmellHistoryByComponent(component);
+        List<MetricsDTO> codeSmells = sonarQubeAgentService.getCodeSmellHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(codeSmells);
     }
 
     @GetMapping("/components/{component}/duplications")
-    public ResponseEntity<List<DuplicationDTO>>
+    public ResponseEntity<List<MetricsDTO>>
     getDuplications(@PathVariable("component") String component) throws IOException {
-        List<DuplicationDTO> duplications = sonarQubeAgentService.getDuplicationHistoryByComponent(component);
+        List<MetricsDTO> duplications = sonarQubeAgentService.getDuplicationHistoryByComponent(component);
         return ResponseEntity.status(HttpStatus.OK).body(duplications);
     }
 

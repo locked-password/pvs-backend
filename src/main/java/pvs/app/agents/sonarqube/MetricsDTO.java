@@ -7,8 +7,8 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class BugDTO {
+public class MetricsDTO {
     Date date;
-    Integer value;
+    Double value;
 
 }
