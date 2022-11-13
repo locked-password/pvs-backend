@@ -49,7 +49,7 @@ public class SonarQubeAgentRepository {
         assert coverageHistoryJsonNodes.isArray();
 
         for (final JsonNode jsonNode : coverageHistoryJsonNodes) {
-            String dateString = jsonNode.get("date").toPrettyString();
+            String dateString = jsonNode.get("date").asText();
             double coverageValue = jsonNode.get("value").asDouble();
 
             Date date = isoParser.parseDateTime(dateString).toDate();
