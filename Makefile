@@ -3,18 +3,30 @@ SHELL = /bin/bash
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CURRENT_DIR := $(notdir $(patsubst %/,%,$(dir $(MAKEFILE_PATH))))
 
-MAVEN_IMAGE := maven:3.8.6-openjdk-18
-EXE_MAVEN := \
+DOCKER_RUN := \
 	docker run --rm -it \
     	-v maven-repos:/root/.m2 \
         -v $$(pwd):/workspace \
-        -w /workspace \
-        --entrypoint="mvn" \
-        ${MAVEN_IMAGE}
+        -w /workspace
+
+MAVEN_IMAGE := maven:3.8.6-openjdk-18
 
 .PHONY: test maven
 test: maven
-	${EXE_MAVEN} $@
+	${DOCKER_RUN} ${MAVEN_IMAGE} mvn $@
+
+.PHONY: unit-test
+unit-test: build-classpath
+	${DOCKER_RUN} ${MAVEN_IMAGE} \
+		java \
+		--class-path ${shell cat target/classpath.txt} \
+		org.junit.platform.console.ConsoleLauncher \
+		--scan-classpath
+
+build-classpath: maven
+	${DOCKER_RUN} ${MAVEN_IMAGE} mvn test-compile
+	${DOCKER_RUN} ${MAVEN_IMAGE} mvn dependency:$@ -D'mdep.outputFile=target/classpath.txt'
+	echo :/workspace/target/classes:/workspace/target/test-classes >> target/classpath.txt
 
 maven:
 ifeq ($(shell docker images -q ${MAVEN_IMAGE} 2> /dev/null),)

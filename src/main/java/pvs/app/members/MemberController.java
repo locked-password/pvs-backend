@@ -25,8 +25,10 @@ public class MemberController {
         this.projectService = projectService;
     }
 
-    @PostMapping("/members")
-    @ApiOperation(value = "新建使用者")
+    @PostMapping(value = "/members",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "新建使用者", notes = "新建一個使用者")
     public ResponseEntity<String> createMember(@RequestBody MemberOfCreation memberOfCreation) {
         try {
             MemberOfCreation createdMember = memberService.createMember(memberOfCreation);
