@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pvs.app.member.MemberDTO;
+import pvs.app.members.MemberOfCreation;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,7 +21,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody MemberDTO memberDTO) {
-        return authService.login(memberDTO.getUsername(), memberDTO.getPassword());
+    public String login(@RequestBody MemberOfCreation memberOfCreation) {
+        return authService.login(memberOfCreation.getUsername(), memberOfCreation.getPassword());
     }
 }

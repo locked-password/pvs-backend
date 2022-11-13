@@ -15,9 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.DigestUtils;
 import pvs.app.Application;
-import pvs.app.member.Member;
-import pvs.app.member.MemberDAO;
-import pvs.app.member.role.Role;
+import pvs.app.members.Member;
+import pvs.app.members.MemberDataAccessor;
+import pvs.app.members.roles.Role;
 
 import java.util.Set;
 
@@ -26,7 +26,7 @@ import java.util.Set;
 public class UserDetailServiceImplTest {
 
     @MockBean
-    private MemberDAO mockMemberDAO;
+    private MemberDataAccessor mockMemberDataAccessor;
 
     @Autowired
     @Qualifier("userDetailsServiceImpl")
@@ -36,7 +36,7 @@ public class UserDetailServiceImplTest {
 
     @BeforeEach
     public void setup() {
-        this.userDetailsServiceImpl = new UserDetailsServiceImpl(mockMemberDAO);
+        this.userDetailsServiceImpl = new UserDetailsServiceImpl(mockMemberDataAccessor);
 
         member = new Member();
         Role userRole = new Role();
@@ -52,7 +52,7 @@ public class UserDetailServiceImplTest {
     @Test
     public void loadUserByUsername_found() {
         //given
-        Mockito.when(mockMemberDAO.findByUsername("test")).thenReturn(member);
+        Mockito.when(mockMemberDataAccessor.findByUsername("test")).thenReturn(member);
         //when
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername("test");
         //then
@@ -62,7 +62,7 @@ public class UserDetailServiceImplTest {
     @Test
     public void loadUserByUsername_notFound() {
         //given
-        Mockito.when(mockMemberDAO.findByUsername("test")).thenThrow(new UsernameNotFoundException("not found"));
+        Mockito.when(mockMemberDataAccessor.findByUsername("test")).thenThrow(new UsernameNotFoundException("not found"));
         //when
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername("notFound");
         //then
